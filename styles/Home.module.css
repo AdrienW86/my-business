@@ -60,7 +60,8 @@
 
 .signForm {
     width: 250px;
-    margin: 30px auto;
+    height: 30vh;
+    margin: 0px auto;
     display: flex;
     text-align: center;
     flex-direction: column;
@@ -89,6 +90,7 @@
 
 .info {
     width: 90%;
+    height: 10vh;
     margin: 0 auto;
     display: flex;
     justify-content: center;
