@@ -1,0 +1,87 @@
+.main {
+ height: 90vh;
+ width: 100%;
+ background-color: #6487b4;
+}
+
+.banner {
+    display: flex;
+    justify-content: center;
+    height: 50vh;
+    background-color: #004AAD;
+}
+
+.link {
+    
+    height: 40px;
+    width: 120px;
+    border: 2px solid #004AAD;
+    margin: 20px auto;
+    text-align: center;
+    color: #004AAD;
+    font-weight: bold;
+    background-color: aliceblue;
+    border-radius: 16px;
+    transition: .4s ease-in-out;
+}
+
+.link:hover {
+    cursor: pointer;
+    background-color: #004AAD;
+    color: white
+}
+
+.box {
+    display: flex;
+    width: 100%;
+    height: 50px;
+}
+
+.loginForm {
+    width: 250px;
+    margin: 30px auto;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.label {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.modal {
+    position: absolute;
+    height: 40vh;
+    width: 100%;
+    background-color: #6487b4;
+    top: 50vh;
+}
+
+.signForm {
+    width: 250px;
+    margin: 30px auto;
+    display: flex;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.modalBtn {
+    height: 30px;
+    color: white;
+    background-color: red;
+    margin: 10px 5px;
+    padding: 6px;
+    border: 1px solid rgb(255, 255, 255)
+}
+
+.info {
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    color: white;
+    border-top: 1px solid rgb(0, 0, 0)
+}

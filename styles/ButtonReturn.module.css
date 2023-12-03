@@ -1,0 +1,21 @@
+.return { 
+    position: absolute;
+    bottom: 80vh;
+    font-weight: bold;
+    color: #ffffff;
+    margin: 12px;
+    width: 80px;
+    height: 30px;
+    border-radius: 8px;
+    transition: .4s ease-in-out;
+    border: 1px solid white;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+    background-color: #004AAD;
+}
+
+.return:hover {
+    cursor: pointer;
+    color: #004AAD;
+    background-color: #ffffff;
+}

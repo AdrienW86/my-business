@@ -1,0 +1,211 @@
+.form { 
+    background-color: aliceblue;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    text-align: center;
+    flex-direction: column;  
+}
+
+.btn_return {
+    height: 5vh;
+    position: absolute;
+    z-index: 2;
+    top: 5px;
+    right: 0;
+    width: 60px;
+    height: 40px;
+    font-weight: 600;
+    border-radius: 8px 0 0 8px;
+    border: 1px solid #004AAD;
+    background-color: white;
+    color: #004AAD;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+    transition: .4s ease-in-out
+}
+
+.btn_return:hover {
+    cursor: pointer;
+    color: white;
+    border: 1px solid #ffffff;
+    background-color: #004AAD;
+}
+
+.title {
+    height: 60px;
+    display: flex;
+    width: 100%;
+    color: white;
+    background-color: #004AAD;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    margin:  0;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.title:hover {
+    background-color: white;
+    color: #004AAD;
+    
+}
+
+.table {
+    overflow-y: auto; 
+    margin: auto;  
+}
+
+.tab {
+    width: 100%;
+    border: none;
+    justify-content: center;
+}
+
+.th {
+    color: #ffffff;
+    background-color: #004AAD
+}
+.td {
+    font-size: 0.8em;
+    font-weight: 600;
+    background-color: white;
+}
+
+.tr {
+    height: 22px;
+    font-size: 0.8em;
+    color: white;
+    font-weight: 600;
+    background-color: #004AAD
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: auto;
+    padding: 8px;
+    height: 30vh;
+    width: 80%;
+    border-radius: 8px;
+    color: #004AAD;
+    font-weight: 600;
+    border: 1px solid black;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.services {
+    display: flex;
+    margin: 5px;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.row {
+    display: flex;
+    text-align: left;
+    height: 30px;
+    margin: 5px auto;
+    
+}
+
+.label {
+    width: 80px;
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    display: flex;
+    flex-direction: column;
+    width: 80px;
+    height: 20px;
+}
+
+.input_service {
+    width: 180px;
+    height: 20px;
+}
+
+.btn_add {
+    margin: 0 auto;
+    width: 100px;
+    padding: 4px;
+    border-radius: 8px;;
+    border: 1px solid #004AAD;
+    color: #004AAD;
+    font-weight: bold;
+    transition: .4s ease-in-out;
+    background-color: white;
+}
+
+.btn_add:hover {
+    color: white;
+    background-color: #004AAD
+}
+.delete {
+    border: 1px solid black;
+    color: white;
+    transition: .4s ease-in-out;
+    background-color: red;
+}
+.delete:hover {
+    color: black;
+    cursor: pointer;
+    transform: rotate(-18deg);
+}
+
+.btn_generate_box {
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.generate {  
+    width: 120px;
+    height: 32px; 
+    color: white;
+    font-weight: bold;
+    padding: 8px;
+    border: none;
+    border-radius: 8px;
+    transition: .4s ease-in-out;
+    background-color: red;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.generate:hover {
+    background-color: rgb(161, 34, 34) ;
+}
+
+.toggleBtn {
+    width: 120px;
+    margin: 0 auto
+}
+
+.modal {
+    position: absolute;
+    width: 100%;
+    top: 20vh;
+    height: 80vh;
+    background-color: rgb(253, 253, 253);
+}
+.modalRow {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalLabel {
+    color: blue;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.modalInput {
+    width: 90%;
+    margin: 10px auto;
+}

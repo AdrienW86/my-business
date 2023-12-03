@@ -1,0 +1,110 @@
+.main {
+    height: 70vh;
+    width: 100%;
+    background-color: #6887af;
+}
+
+.container {
+    position: relative;
+    height: 60vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    display: flex;
+    height: 100px;
+    width: 100%;
+    border-bottom: 2px solid black;
+    background-color: #ffffff;
+}
+
+.logo {
+    height: 100px;
+    width: 100px;
+    border-right: 1px solid black
+}
+
+.infos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+.name {
+    display: flex;
+    justify-content: center;
+    margin: 8px;
+    text-align: center;
+    color: #004AAD;
+}
+
+.status {
+    display: flex; 
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.profit, .expenses {
+    display: flex; 
+    margin: 4px;
+    text-align: center;
+    margin-left : 8px;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+   justify-content: center;
+    height: 40vh
+    
+}
+
+.p_infos {
+    display: flex;
+    margin: 1vh;
+    text-align: center;
+    margin-left : 8px;
+    color: white;
+}
+
+.span_infos {
+    color: black;
+    margin-left: 4px;
+    position: absolute;
+    right: 10px;
+    font-weight: 500;
+}
+
+.body {
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    padding: 8px;
+    background-color: #6887af;
+}
+
+.box {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.params {
+    width: 100px;
+    height: 40px;
+    padding: 8px;
+    color: #004AAD;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 2px solid  #000000;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.params:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #004AAD;
+}

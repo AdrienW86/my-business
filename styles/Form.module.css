@@ -1,0 +1,67 @@
+.form {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title {
+    width: 100%;
+    color: #004AAD;
+    text-align: center;
+}
+
+.row {
+    display: flex;
+    width: 100%;
+    margin: 10px 0;
+    justify-content: center;
+}
+
+.label {
+    width: 100px;
+    font-weight: bold;
+}
+
+.label_adress {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px;
+    width: 100%;
+    color: #004AAD;
+}
+
+.adress {
+    display: flex;
+    border: 1px solid black;
+    width: 300px;
+    flex-direction: column;
+    border-radius: 16px;
+    margin: 5px auto;
+    padding: 8px
+}
+
+.box_btn {
+    display: flex;
+    width: 100%;
+   
+    justify-content: center;
+}
+
+.add_btn {
+    margin: 16px;
+    height: 30px;
+    width: 80px;
+    border: 1px solid black;
+    color: white;  
+    background-color: rgb(14, 82, 28);
+}
+
+.close_btn {
+    margin: 16px;
+    height: 30px;
+    width: 80px;
+    border: 1px solid black;
+    color: white;  
+    background-color: red;
+}
