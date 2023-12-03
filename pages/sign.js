@@ -26,6 +26,7 @@ export default function Sign() {
       if (response.ok) {
         const responseData = await response.json();
         console.log('User created:', responseData);
+        alert('Votre compte a bien été crée')
         router.push('/');
       } else {
         const errorMessage = await response.text();
