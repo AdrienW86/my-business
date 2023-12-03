@@ -6,6 +6,11 @@ import styles from '../styles/Nav.module.css'
 export default function nav() {
   const router = useRouter();
 
+  const navigation =() => {
+    localStorage.clear()
+    router.push('/')
+  }
+
   return (
     <nav className={styles.nav}>           
         <ul className={styles.ul}>  
@@ -13,7 +18,7 @@ export default function nav() {
           <Link className={router.pathname === '/devis' ? styles.active : styles.link} href="/devis"> <li className={styles.li}> Devis </li> </Link> 
           <Link className={router.pathname === '/clients' ? styles.active : styles.link} href="/clients"> <li className={styles.li}> Clients </li> </Link>          
         </ul>               
-        <Link href='/' className={styles.disconnect}> Quitter </Link> 
+        <button  onClick={navigation} className={styles.disconnect}> Quitter </button> 
      </nav>
   )
 }

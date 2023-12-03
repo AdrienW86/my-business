@@ -46,8 +46,7 @@ export default function Menu(props) {
             <section className={styles.btn_container}>
             <button className={styles.btn_add} onClick={() => navigation(url)}>  + {props.toggleText} </button>
             </section>
-            <section className={styles.container}>
-                
+            <section className={styles.container}>               
                     {props.data.map((el, index) =>( 
                         <div 
                         onClick={() => {

@@ -1,0 +1,113 @@
+.container {
+    position: absolute;
+    top: 0;
+    height: 100vh;
+    width: 100%;  
+}
+
+.form {
+    position: relative;
+    padding-top: 10vh;
+    display: flex;  
+    justify-content: center;
+    flex-direction: column;
+    height: 90vh;
+    width: 100%;
+    z-index: 2;
+    background-color: #a9b8ca;
+}
+
+.title {
+    color: #004AAD;
+    position: absolute;
+    top: 0;
+    margin: 0;
+    height: 10vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    border-bottom: 2px solid black;
+    background-color: aliceblue;
+}
+
+.input {
+    color: #004AAD;
+    margin: 10px auto;
+    text-align: center;
+    font-weight: bold;  
+}
+
+.adress {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px auto;
+    width: 232px;
+    padding: 16px;
+    border-radius: 16px;
+    border: 2px solid black;
+}
+
+.div {
+    margin: 10px 0;
+    display: flex;
+    justify-content: center;
+}
+
+.number {
+    width: 52px;
+    margin-right: 10px;
+}
+
+.streetName {
+    width: 154px;
+}
+
+.street {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.inputAdress {
+   margin: 10px 0
+}
+
+.submit {
+    width: 200px;
+    height: 40px;
+    margin: 20px auto;
+    border: 2px solid #004AAD;
+    border-radius: 8px;
+    color: #004AAD;
+    font-weight: bold;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.submit:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #004AAD;
+}
+
+.btnClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+    z-index: 10;
+    color: white;
+    background-color: red;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.btnClose:hover {
+    cursor: pointer;
+    background-color: rgb(141, 0, 0);
+}

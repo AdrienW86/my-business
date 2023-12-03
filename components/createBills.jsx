@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
-import { user } from '../data';
+
 import { useRouter } from 'next/router'
 
 const CreateBills = (props) => {
@@ -28,6 +28,44 @@ const CreateBills = (props) => {
      zipcode: '',
      city: '',
   });
+
+
+  const [user, setUserProfil] = useState({}); // Initialisez avec un objet vide
+
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem('token');
+
+      if (!token) {
+        console.error('Token missing');
+        return;
+      }
+
+      const response = await fetch('/api/profil', {
+        method: 'GET',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const userData = await response.json();
+        console.log('User data:', userData);
+        setUserProfil(userData);
+      } else {
+        console.error('Error fetching user data:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error.message);
+    }
+  };
+
+  useEffect(() => {
+       
+    
+    fetchUserData();
+  }, []); // Utilisez une dépendance vide pour que cela s'exécute une seule fois lors du montage initial
+
 
 
 const [toggle, setToggle] = useState(false)
@@ -111,14 +149,14 @@ const Toggle = () => {
     pdf.text(`Siret : ${user.siret}`, margin, 60)
     pdf.text(`Téléphone : ${user.phone}`, margin, 66)
     pdf.text(`Email : ${user.email}`, margin, 72)
-    pdf.text(`${user.adress.number} ${user.adress.street}`, margin, 78)
-    pdf.text(`${user.adress.zipcode} ${user.adress.city}`, margin, 84)
+    pdf.text(`${user.address.number} ${user.address.street}`, margin, 78)
+    pdf.text(`${user.address.zipcode} ${user.address.city}`, margin, 84)
     pdf.text(`Téléphone : ${clientPhone}`, margin, 110)
     pdf.text(`Email : ${clientEmail}`, margin, 116)
     pdf.text(`${clientAddress.number} ${clientAddress.street}`, margin, 122)
     pdf.text(`${clientAddress.zipcode} ${clientAddress.city}`, margin, 128)
     pdf.text(`${dateFormatee}`, 15, 155)
-    pdf.text(`${user.factures.length}`, margin, 155);
+    pdf.text(`${user.invoices.length +1}`, margin, 155);
     pdf.text(`30 jours`, 150, 155);
 
     // Ajouter les prestations dans le tableau

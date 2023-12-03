@@ -1,11 +1,4 @@
-import { useState, useEffect } from 'react'
-import Menu from '../../components/menu'
-import Folder from '../../assets/folder.png'
-
-export default function clients() { 
-  const [userProfil, setUserProfil] = useState([]); 
-
-  const fetchUserData = async () => {
+const fetchUserData = async () => {
     try {
       const token = localStorage.getItem('token');
 
@@ -24,7 +17,7 @@ export default function clients() {
       if (response.ok) {
         const userData = await response.json();
         console.log('User data:', userData);
-        setUserProfil(userData.clients);
+        setUserProfil(userData);
       } else {
         console.error('Error fetching user data:', response.statusText);
       }
@@ -32,21 +25,3 @@ export default function clients() {
       console.error('Error fetching user data:', error.message);
     }
   };
-
-  useEffect(() => { 
-    fetchUserData();
-    console.log(userProfil)
-  }, []);
-
-  return (
-  <>
-    <Menu 
-        title = "Liste de vos clients"
-        toggleText = "Ajouter un client" 
-        alt = "Icône d'un dossier"
-        icon = {Folder}   
-        data = {userProfil} 
-    />
-  </>
-  )
-}
