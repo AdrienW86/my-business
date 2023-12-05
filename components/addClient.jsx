@@ -1,48 +1,30 @@
-import React, {useState} from 'react'
-import { useRouter } from 'next/router'
+import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import styles from '../styles/Form.module.css'
 
-import { useUser } from '@/utils/UserContext';
+const AddClientForm = () => {
+  const { handleSubmit, control, formState: { errors } } = useForm();
 
-const MyForm = (props) => {
-
-  const defaultData = {
-    name: '',
-    siret: '',
-    address: {
-      number: '',
-      street: '',
-      city: '',
-      zipcode: '',
-      country: '',
-    },
-  };
-  
-  const { addClient } = useUser();
-
-  const router = useRouter()
-
-  const navigation = (path) => { 
-    router.push(path)
-}
-const { handleSubmit, control, setValue, formState: { errors } } = useForm({
-  defaultValues: defaultData, // Utilisez les valeurs par défaut ici
-});
-
+  const token = localStorage.getItem('token')
   const onSubmit = async (data) => {
-    console.log(data)
     try {
-      // Call the addClient function with the form data
-      await addClient(data);
+      const response = await fetch('/api/add-client', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(data),
+      });
 
-      // Do something after adding the client, if needed
-
-      // Navigate to a different path or perform other actions
-      navigation(props.path);
+      if (response.ok) {
+        console.log('Client ajouté avec succès');
+        // Effectuez des actions supplémentaires si nécessaire
+      } else {
+        console.error('Erreur lors de l\'ajout du client:', response.statusText);
+      }
     } catch (error) {
-      console.error('Error adding client:', error.message);
-      // Handle error, show a message, or perform other actions
+      console.error('Erreur lors de l\'ajout du client:', error.message);
     }
   };
 
@@ -80,6 +62,32 @@ const { handleSubmit, control, setValue, formState: { errors } } = useForm({
         />
       </div>
       {errors.siret && <p className={styles.error} >{errors.siret.message}</p>}
+
+
+      <div className={styles.row}>
+        <label className={styles.label}>Email:</label>
+        <Controller
+          name="email"
+          control={control}
+          rules={{ required: 'Email requis' }}
+          render={({ field }) => <input className={styles.input} {...field} />}
+        />    
+      </div>
+      {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+
+
+      <div className={styles.row}>
+        <label className={styles.label}>Téléphone:</label>
+        <Controller
+          name="phone"
+          control={control}
+          rules={{ required: 'Le numéro de téléphone est requis' }}
+          render={({ field }) => <input className={styles.input} {...field} />}
+        />    
+      </div>
+      {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
+
+
     </div>
     <div className={styles.adress}>
       <label className={styles.label_adress}>Adresse:</label>
@@ -148,4 +156,4 @@ const { handleSubmit, control, setValue, formState: { errors } } = useForm({
   );
 };
 
-export default MyForm;
+export default AddClientForm;

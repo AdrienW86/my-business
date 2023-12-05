@@ -4,8 +4,12 @@ import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
 
 import { useRouter } from 'next/router'
+import { useUser } from '@/utils/UserContext';
 
 const CreateBills = (props) => {
+
+  const { user, userAddress, updateUser, fetchUserData } = useUser();
+
   const router = useRouter()
   const navigation = (path) => { 
     router.push(path)
@@ -29,52 +33,19 @@ const CreateBills = (props) => {
      city: '',
   });
 
+  
 
-  const [user, setUserProfil] = useState({}); // Initialisez avec un objet vide
+  
 
-  const fetchUserData = async () => {
-    try {
-      const token = localStorage.getItem('token');
-
-      if (!token) {
-        console.error('Token missing');
-        return;
-      }
-
-      const response = await fetch('/api/profil', {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const userData = await response.json();
-        console.log('User data:', userData);
-        setUserProfil(userData);
-      } else {
-        console.error('Error fetching user data:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error.message);
-    }
-  };
-
-  useEffect(() => {
-       
-    
+  useEffect(() => {  
     fetchUserData();
-  }, []); // Utilisez une dépendance vide pour que cela s'exécute une seule fois lors du montage initial
-
-
+  }, []); 
 
 const [toggle, setToggle] = useState(false)
 
 const Toggle = () => {
   setToggle(!toggle)
 }
-
-
 
   const addPrestation = () => {
     if (prestation && prix && quantity) {

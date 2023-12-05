@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-
 const serviceSchema = new mongoose.Schema({
   id: {
     type: Number,
@@ -78,10 +77,6 @@ const invoiceSchema = new mongoose.Schema({
 });
 
 const clientSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
-  },
   name: {
     type: String,
     required: true,
@@ -125,8 +120,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     validate(v) {
       if (!validator.isEmail(v)) throw new Error('E-mail non valide !');
-    }
-    
+    } 
   },
   password: {
     type: String,

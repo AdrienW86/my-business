@@ -1,12 +1,15 @@
-import { connectDb } from "@/utils/database"
 
-connectDb().catch(err=> console.log(err))
+import { UserProvider } from '@/utils/UserContext'
+
+
 
 export default function App({
   Component,
   pageProps: {...pageProps },
 }) {
   return (  
-    <Component {...pageProps} />
+    <UserProvider>
+        <Component {...pageProps} />
+    </UserProvider>
   )
 }

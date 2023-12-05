@@ -16,7 +16,6 @@ async function handler(req, res) {
     }
 
     const token = jwt.sign({ userId: user._id, email: user.email }, process.env.NEXT_PUBLIC_JWT_SECRET);
-
     res.status(200).json({ token });
 
   } catch (error) {

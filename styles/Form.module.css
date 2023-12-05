@@ -1,5 +1,11 @@
+.modal_body {
+    height: 100vh;
+    background-color: #004AAD;
+}
+
 .form {
     padding: 4px;
+    height: 90vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -8,7 +14,13 @@
 .title {
     width: 100%;
     color: #004AAD;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    background-color: white;
     text-align: center;
+    height: 10vh;
 }
 
 .row {
@@ -37,14 +49,14 @@
     width: 300px;
     flex-direction: column;
     border-radius: 16px;
-    margin: 5px auto;
-    padding: 8px
+    margin: 30px auto;
+    padding: 8px;
+    background-color: aliceblue;
 }
 
 .box_btn {
     display: flex;
     width: 100%;
-   
     justify-content: center;
 }
 
@@ -64,4 +76,14 @@
     border: 1px solid black;
     color: white;  
     background-color: red;
+}
+
+.error {
+    color: red;
+    text-align: right;
+    margin: 0 10px   
+}
+
+.input {
+    height: 15px;  
 }
