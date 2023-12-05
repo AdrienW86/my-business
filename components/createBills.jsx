@@ -8,7 +8,7 @@ import { useUser } from '@/utils/UserContext';
 
 const CreateBills = (props) => {
 
-  const { user, userAddress, updateUser, fetchUserData } = useUser();
+  const { user, fetchUserData } = useUser();
 
   const router = useRouter()
   const navigation = (path) => { 
@@ -32,10 +32,6 @@ const CreateBills = (props) => {
      zipcode: '',
      city: '',
   });
-
-  
-
-  
 
   useEffect(() => {  
     fetchUserData();

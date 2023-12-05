@@ -21,7 +21,7 @@ export default function Profil() {
   
     const handleUpdate = async (updatedData) => {
       try {
-        const token = localStorage.getItem('token'); // Utilisez js-cookie pour récupérer le token
+        const token = localStorage.getItem('token'); 
         const response = await fetch('/api/update', {
           method: 'PUT',
           headers: {

@@ -6,6 +6,8 @@ import Footer from '@/components/footer';
 import { useRouter } from 'next/router';
 import styles from './Client.module.css';
 import { useUser } from '@/utils/UserContext';
+import UpdateClientForm from '@/components/updateClient';
+
 
 export default function ClientsId() {
   const { user, fetchUserData } = useUser();
@@ -13,7 +15,44 @@ export default function ClientsId() {
   const { id } = router.query;
   const clientId = parseInt(id);
   const [toggle, setToggle] = useState(false);
-  const [toggle2, setToggle2] = useState(false);
+  
+
+  const updateClient = async (clientId, formData) => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await fetch(`/api/update-client?clientId=${clientId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          // Utilisez les données du formulaire ici
+          name: formData.name,
+          phone: formData.phone,
+          email: formData.email,
+          // ... autres champs
+          address: {
+            number: formData.address.number,
+            street: formData.address.street,
+            city: formData.address.city,
+            zipcode: formData.address.zipcode,
+            country: formData.address.country,
+          },
+        }),
+      });
+  
+      if (response.ok) {
+        const updatedData = await response.json();
+        console.log('Client mis à jour:', updatedData.updatedClient);
+        // Vous pouvez également mettre à jour l'état local du client avec les nouvelles données
+      } else {
+        console.error('Error updating client:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error updating client:', error.message);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,18 +63,13 @@ export default function ClientsId() {
         console.error("Erreur lors du chargement des données:", error);
         alert("Erreur lors du chargement des données du client");
       }
-    };
-  
+    }; 
     fetchData(); // Appelez la fonction fetchData
   }, []);
   
 
   const Toggle = () => {
     setToggle(!toggle);
-  };
-
-  const Toggle2 = () => {
-    setToggle2(!toggle2);
   };
 
   const showInvoice = (id) => {
@@ -85,65 +119,24 @@ export default function ClientsId() {
                     <p className={styles.h3}>Devis </p>
                   </div>
                   <div className={styles.box}>
-                    <button onClick={Toggle} className={styles.btn}>
+                    <button  className={styles.btn}>
                       Voir factures
                     </button>
-                    <button onClick={Toggle2} className={styles.btn}>
+                    <button  className={styles.btn}>
                       Voir devis
                     </button>
-                  </div>
-                  {toggle && (
-                    <section className={styles.list}>
-                      <p className={styles.list_title}> </p>
-                      <button onClick={Toggle} className={styles.btnClose}>
-                        Fermer
-                      </button>
-                      {user.clients[clientId].invoices.map((el, index) => (
-                        <div key={index} className={styles.factures}>
-                          <p>
-                            Facture numéro <span className={styles.span}> {el.number} </span>{' '}
-                          </p>
-                          <p>
-                            Date : <span className={styles.span}> {el.date} </span>
-                          </p>
-                          <p>
-                            Montant : <span className={styles.span}> {el.total} € </span>
-                          </p>
-                          <button
-                            className={styles.btn_show}
-                            onClick={() => showInvoice(el.number)}
-                          >
-                            Voir
-                          </button>
-                        </div>
-                      ))}
-                    </section>
-                  )}
-                  {toggle2 && (
-                    <section className={styles.list}>
-                      <p className={styles.list_title}> Devis du client </p>
-                      <button onClick={Toggle2} className=''>
-                        Fermer
-                      </button>
-                      {user.clients[clientId].quotes.map((el, index) => (
-                        <div key={index} className={styles.factures}>
-                          <button onClick={() => showDevis(el.number)}> Voir </button>
-                          <p> Devis numéro {el.number} </p>
-                          <p> Date : {el.date} </p>
-                          <p> Montant : {el.total} €</p>
-                        </div>
-                      ))}
-                    </section>
-                  )}
+                  </div>                
                   <div className={styles.box_delete}>
                     <button className={styles.delete}> Supprimer le client </button>
+                    <button onClick={Toggle}>Mettre à jour le client</button>                   
                   </div>
                 </div>
               </div>
             </div>
           </section>
         )}
-      </main>
+      </main>    
+      <UpdateClientForm clientId ={clientId} updateClient={updateClient} toggle={toggle} setToggle={setToggle} />
       <Footer />
     </>
   );
