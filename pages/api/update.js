@@ -31,7 +31,6 @@ async function handler(req, res) {
           country: req.body.address.country,
         },
         phone: req.body.phone,
-        email: req.body.email,
       }, { new: true });
 
     if (!updatedUser) {

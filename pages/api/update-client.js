@@ -17,6 +17,7 @@ async function handler(req, res) {
     const decodedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || 'votre_clé_secrète');
     const userId = decodedToken.userId;
     const id = req.query.clientId
+    console.log(id)
     
     
     const user = await User.findById(userId);

@@ -3,6 +3,7 @@
     position: absolute;
     top: 0;
     width: 100%;
+    z-index: 10;
     background-color: #004AAD;
 }
 
@@ -48,36 +49,64 @@
 
 .adress {
     display: flex;
-    border: 1px solid black;
+    border: 2px solid black;
     width: 300px;
     flex-direction: column;
     border-radius: 16px;
     margin: 30px auto;
     padding: 8px;
     background-color: aliceblue;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
 }
 
 .box_btn {
     display: flex;
-    width: 100%;
+    margin: 0 auto;
+    width: 300px;
+    border-radius: 16px;
+    border: 2px solid black;
+    background-color: aliceblue;
     justify-content: center;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
 }
 
 .add_btn {
     margin: 16px;
     height: 30px;
     width: 80px;
-    border: 1px solid black;
-    color: white;  
-    background-color: rgb(14, 82, 28);
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid rgb(14, 82, 28);
+    color: rgb(14, 82, 28); 
+    background-color: white;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.add_btn:hover {
+    cursor: pointer;
+    color: white;
+    background-color:rgb(14, 82, 28);
 }
 
 .close_btn {
     margin: 16px;
     height: 30px;
     width: 80px;
-    border: 1px solid black;
-    color: white;  
+    font-weight: bold;
+    border-radius: 8px;
+    border: 2px solid red;
+    color:red;  
+    background-color: white;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.close_btn:hover {
+    cursor: pointer;
+    color: white;
     background-color: red;
 }
 

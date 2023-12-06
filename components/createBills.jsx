@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
-
+import AddClientForm from './addClient';
 import { useRouter } from 'next/router'
 import { useUser } from '@/utils/UserContext';
 
@@ -14,6 +14,7 @@ const CreateBills = (props) => {
   const navigation = (path) => { 
     router.push(path)
 }
+console.log(props.path)
   const [prestations, setPrestations] = useState([]);
   const [prestation, setPrestation] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -41,6 +42,11 @@ const [toggle, setToggle] = useState(false)
 
 const Toggle = () => {
   setToggle(!toggle)
+}
+const [modal, setModal] = useState(false)
+
+const addClient = () => {
+  setModal(!modal)
 }
 
   const addPrestation = () => {
@@ -163,15 +169,21 @@ const Toggle = () => {
   return (
     <>
     <section className={styles.form}>    
+      <h1 className={styles.title}> {props.title}</h1>  
       <button 
         onClick={() => navigation(props.path)}
         className={styles.btn_return}> Retour
       </button>
-      <h1 className={styles.title}> {props.title}</h1>  
-      <h2>Informations du client</h2>
-        <button className={styles.toggleBtn}  onClick={Toggle}> Modifier </button>
-      {toggle && 
-        <section className={styles.modal}>     
+      <h2 className={styles.h2}>Informations du client</h2>
+        <div className={styles.box}>
+          <button className={styles.toggleBtn} onClick={Toggle}> Ajout non sauvegardé </button>
+          <button className={styles.toggleBtn} onClick={addClient}> Ajouter client </button>
+          <button className={styles.toggleBtn} > Ajouter client enregistré </button>         
+        </div>
+        {modal &&  <AddClientForm modal ={setModal}/>}
+        {toggle && 
+          <section className={styles.modal}>  
+           <button className={styles.modalBtn} onClick={Toggle}> Fermer </button>
           <div className={styles.modalRow}>
               <label className={styles.modalLabel}>Nom du client:</label>
               <input className={styles.modalInput} type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
@@ -191,13 +203,16 @@ const Toggle = () => {
               <input className={styles.modalInput} type="text" placeholder="Code postal" value={clientAddress.zipcode} onChange={(e) => setClientAddress({ ...clientAddress, zipcode: e.target.value })} />
               <input className={styles.modalInput} type="text" placeholder="Ville" value={clientAddress.city} onChange={(e) => setClientAddress({ ...clientAddress, city: e.target.value })} />
           </div>
-        </section> 
-      }
+          <div className={styles.submitBox}>
+            <button className={styles.modalSubmit} onClick={Toggle}> Valider </button>
+          </div> 
+          </section> 
+        }
       <div className={styles.container}>    
         <div className={styles.services}>
           <div className={styles.row}>
             <label className={styles.label}>Prestation:</label>
-            <input className={styles._services} type="text" value={prestation} onChange={(e) => setPrestation(e.target.value)} />
+            <input className={styles.input} type="text" value={prestation} onChange={(e) => setPrestation(e.target.value)} />
           </div>       
           <div className={styles.row}>
             <label className={styles.label}>Quantité:</label>

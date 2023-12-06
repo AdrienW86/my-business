@@ -47,26 +47,26 @@ export default function Menu(props) {
             <button className={styles.btn_add} onClick={() => navigation(url)}>  + {props.toggleText} </button>
             </section>
             <section className={styles.container}>               
-                    {props.data.map((el, index) =>( 
-                        <div 
-                        onClick={() => {
-                            setSelectedClient(index);
-                            navigateToClientDetails(index); // Remplacez 'id' par la propriété appropriée de votre client
-                          }}
-                            className={styles.row} 
-                            key = {index}
-                            > 
-                            <Image
-                                src={props.icon}
-                                width={35}
-                                height={35}
-                                priority
-                                className={styles.icons}
-                                alt={props.alt}
-                            /> 
-                            <p className={styles.p}> {el.name} </p>               
-                        </div>
-                    ))}          
+              {props.data.map((el, index) =>( 
+                <div 
+                  onClick={() => {
+                    setSelectedClient(index);
+                    navigateToClientDetails(index);
+                  }}
+                  className={styles.row} 
+                  key = {index}
+                > 
+                  <Image
+                    src={props.icon}
+                    width={35}
+                    height={35}
+                    priority
+                    className={styles.icons}
+                    alt={props.alt}
+                  /> 
+                  <p className={styles.p}> {el.name} </p>               
+                </div>
+              ))}          
             </section>           
         </main>
     <Footer />

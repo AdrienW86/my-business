@@ -55,7 +55,7 @@ export default function Profil() {
       <main className={styles.main} >
         <Nav /> 
           {toggle &&
-            <UpdateForm onSubmit={handleUpdate} toggle={Toggle} />
+            <UpdateForm onSubmit={handleUpdate} />
           }
           {user && (
             <div className={styles.container}>

@@ -10,11 +10,14 @@ import UpdateClientForm from '@/components/updateClient';
 
 
 export default function ClientsId() {
+
   const { user, fetchUserData } = useUser();
   const router = useRouter();
   const { id } = router.query;
   const clientId = parseInt(id);
+
   const [toggle, setToggle] = useState(false);
+  console.log(clientId)
   
 
   const updateClient = async (clientId, formData) => {
@@ -66,6 +69,36 @@ export default function ClientsId() {
     }; 
     fetchData(); // Appelez la fonction fetchData
   }, []);
+
+  const deleteClient = async (clientId) => {
+    window.confirm('Voulez vous vraiment supprimer ce client ?')
+    const token = localStorage.getItem('token');
+    try {
+      
+  
+const response = await fetch(`/api/delete-client?clientId=${clientId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const updatedData = await response.json();
+       console.log(clientId)
+        console.log('Client supprimé:', updatedData);
+        router.push('/clients')
+        // Vous pouvez également mettre à jour l'état local de l'utilisateur avec les nouvelles données
+        // ou effectuer toute autre action nécessaire après la suppression du client
+      } else {
+        console.error('Error deleting client:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error deleting client:', error.message);
+    }
+  };
+  
   
 
   const Toggle = () => {
@@ -115,10 +148,6 @@ export default function ClientsId() {
                   )}
                   <p className={styles.dash}></p>
                   <div className={styles.box}>
-                    <p className={styles.h3}>Factures </p>
-                    <p className={styles.h3}>Devis </p>
-                  </div>
-                  <div className={styles.box}>
                     <button  className={styles.btn}>
                       Voir factures
                     </button>
@@ -127,8 +156,8 @@ export default function ClientsId() {
                     </button>
                   </div>                
                   <div className={styles.box_delete}>
-                    <button className={styles.delete}> Supprimer le client </button>
-                    <button onClick={Toggle}>Mettre à jour le client</button>                   
+                    <button className={styles.update} onClick={Toggle}>Mettre à jour</button>  
+                    <button className={styles.delete} onClick={() =>deleteClient(clientId)}> Supprimer </button>                                  
                   </div>
                 </div>
               </div>
@@ -136,7 +165,9 @@ export default function ClientsId() {
           </section>
         )}
       </main>    
-      <UpdateClientForm clientId ={clientId} updateClient={updateClient} toggle={toggle} setToggle={setToggle} />
+      {toggle &&
+        <UpdateClientForm clientId ={clientId} updateClient={updateClient} />
+      }
       <Footer />
     </>
   );

@@ -1,18 +1,25 @@
 .form { 
     background-color: aliceblue;
-    width: 100%;
+    min-width: 300px;
+    max-width: 800px;
+    margin: 0 auto;
     height: 100vh;
     display: flex;
+    position: relative;
     text-align: center;
     flex-direction: column;  
+}
+
+.box {
+    display: flex;
 }
 
 .btn_return {
     height: 5vh;
     position: absolute;
     z-index: 2;
-    top: 5px;
     right: 0;
+    top: 5px;
     width: 60px;
     height: 40px;
     font-weight: 600;
@@ -52,9 +59,12 @@
     
 }
 
+.h2 {
+    margin-bottom: 50px;
+}
 .table {
     overflow-y: auto; 
-    margin: auto;  
+    margin: 0 auto 80px auto
 }
 
 .tab {
@@ -85,10 +95,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: auto;
+    margin: 40px auto;
     padding: 8px;
     height: 30vh;
-    width: 80%;
+    min-width: 300px;
+    max-width: 800px;
+    height: 200px;
     border-radius: 8px;
     color: #004AAD;
     font-weight: 600;
@@ -121,7 +133,7 @@
 .input {
     display: flex;
     flex-direction: column;
-    width: 80px;
+    width: 180px;
     height: 20px;
 }
 
@@ -143,6 +155,7 @@
 }
 
 .btn_add:hover {
+    cursor: pointer;
     color: white;
     background-color: #004AAD
 }
@@ -162,10 +175,13 @@
     margin: 10px auto;
     display: flex;
     justify-content: center;
+   
 }
 
 .generate {  
     width: 120px;
+    position: absolute;
+    bottom: 40px;
     height: 32px; 
     color: white;
     font-weight: bold;
@@ -179,24 +195,88 @@
 }
 
 .generate:hover {
+    cursor: pointer;
     background-color: rgb(161, 34, 34) ;
 }
 
-.toggleBtn {
+.toggleBtn, .modalBtn, .modalSubmit {
+    position: relative;
     width: 120px;
-    margin: 0 auto
+    height: 40px;
+    margin: 0 auto;
+    font-weight: bold;
+    color: #004AAD;
+    border-radius: 8px;;
+    border: 2px solid #004AAD;
+    transition: .4s ease-in-out;
+    background-color: #ffffff;
+}
+
+.modalBtn {
+    color: red;
+    width: 60px;
+    height: 30px;
+    border-color: red;
+    position: absolute;
+    right: 10px;
+    top: 20px;
+    transition: 4.s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.modalBtn:hover {
+    cursor: pointer;
+    color: white;
+    background-color: red;
+}
+
+.submitBox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.modalSubmit {
+    position: absolute;
+    margin: 0 auto;
+    bottom: 50px;
+    color: green;
+    border-color: green;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.modalSubmit:hover {
+    cursor: pointer;
+    color: white;
+    background-color: green;
+}
+    
+.toggleBtn:hover {
+   cursor: pointer;
+   color: #ffffff;
+   background-color: #004AAD;
 }
 
 .modal {
     position: absolute;
+    min-width: 300px;
+    max-width: 800px;
+    margin: 0 auto;
+    top: 6vh;
     width: 100%;
-    top: 20vh;
-    height: 80vh;
+    padding-top: 5vh;
+    height: 89vh;
+    z-index: 10;
     background-color: rgb(253, 253, 253);
 }
 .modalRow {
     display: flex;
     flex-direction: column;
+    min-width: 300px;
+    max-width: 800px;
 }
 
 .modalLabel {
@@ -207,5 +287,5 @@
 
 .modalInput {
     width: 90%;
-    margin: 10px auto;
+    margin: 20px auto;
 }
