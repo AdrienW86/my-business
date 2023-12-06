@@ -135,7 +135,7 @@
 .input {
     display: flex;
     flex-direction: column;
-    width: 180px;
+    width: 160px;
     height: 20px;
 }
 
@@ -282,7 +282,7 @@
 }
 
 .modalLabel {
-    color: blue;
+    color: #004AAD;;
     font-weight: bold;
     margin-top: 10px;
 }
@@ -291,3 +291,90 @@
     width: 90%;
     margin: 20px auto;
 }
+
+.listClients {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 100;
+    background-color: #ffffff;
+}
+
+.toggleBtnCloseBox {
+    width: 100%;
+    display: flex;
+    justify-content: right;
+}
+
+.toggleBtnClose {
+    color: red;
+    font-size: 1.2em;
+    border: 2px solid red;
+    height: 40px;
+    width: 120px;
+    top: 0;
+    right: 0;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.toggleBtnClose:hover {
+    cursor: pointer;
+    color: white;
+    background-color: red;
+}
+
+.modal_container {
+    min-width: 300px;
+    max-width: 600px;
+    min-height: 400px;
+    padding: 16px;
+    margin: 60px auto;
+    border: 2px solid #004AAD;
+    border-radius: 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.modal_title {
+    font-size: 2em;
+    color: #004AAD;
+    margin: 100px auto;
+}
+
+.rowModal {
+    display: flex;
+    border-radius: 8px;
+    padding-left: 10px;
+    font-weight: 700;
+    width: 130px;
+    height: 50px;
+    margin:  auto 10px;  
+    font-size: 0.9em;
+    background-color: rgb(255, 255, 255);
+    transition: .4s ease-in-out;  
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.rowModal:hover {
+    cursor: pointer;
+    color: whitesmoke;
+    background-color:#6887af;;
+}
+
+.icons {
+    padding-top: 6px;
+}
+.p {
+    height: 50px;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 2px; 
+}
+

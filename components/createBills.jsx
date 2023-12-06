@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image'
+import Folder from '@/assets/folder.png'
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
@@ -9,12 +11,13 @@ import { useUser } from '@/utils/UserContext';
 const CreateBills = (props) => {
 
   const { user, fetchUserData } = useUser();
-
+  const [listClients, setListClients] = useState([]);
+  
   const router = useRouter()
   const navigation = (path) => { 
     router.push(path)
 }
-console.log(props.path)
+
   const [prestations, setPrestations] = useState([]);
   const [prestation, setPrestation] = useState('');
   const [quantity, setQuantity] = useState('');
@@ -38,10 +41,25 @@ console.log(props.path)
     fetchUserData();
   }, []); 
 
+useEffect(() => {
+  if (user && user.clients) {
+    const clientsNames = user.clients.map(client => client);
+    setListClients(clientsNames);
+    console.log(listClients)
+  }
+}, [user]);
+
+
 const [toggle, setToggle] = useState(false)
+const [toggle2, setToggle2] = useState(false)
 
 const Toggle = () => {
   setToggle(!toggle)
+}
+
+const Toggle2 = () => {
+  setToggle2(!toggle2)
+  console.log(toggle2)
 }
 const [modal, setModal] = useState(false)
 
@@ -178,7 +196,41 @@ const addClient = () => {
         <div className={styles.box}>
           <button className={styles.toggleBtn} onClick={Toggle}> Ajout non sauvegardé </button>
           <button className={styles.toggleBtn} onClick={addClient}> Ajouter client </button>
-          <button className={styles.toggleBtn} > Ajouter client enregistré </button>         
+          <button onClick={Toggle2} className={styles.toggleBtn} > Ajouter client enregistré  </button> 
+          {toggle2 && 
+            <section className={styles.listClients}>
+              <div className={styles.toggleBtnCloseBox}>  
+                <button 
+                  onClick={Toggle2} 
+                  className={styles.toggleBtnClose} 
+                > fermer </button>
+              </div>
+              <h3 className={styles.modal_title}> Vos clients enregistrés </h3>
+              <div className={styles.modal_container}>            
+               {listClients.map((el, index) => (
+                  <div 
+                  onClick={() => {
+                    setSelectedClient(index);
+                    navigateToClientDetails(index);
+                  }}
+                  className={styles.rowModal} 
+                  key = {index}
+                > 
+                  <Image
+                    src={Folder}
+                    width={35}
+                    height={35}
+                    priority
+                    className={styles.icons}
+                    alt={props.alt}
+                  /> 
+                  <p className={styles.p}> {el.name} </p>               
+                </div>
+                 
+                ))}
+              </div>
+            </section>}
+                  
         </div>
         {modal &&  <AddClientForm modal ={setModal}/>}
         {toggle && 
