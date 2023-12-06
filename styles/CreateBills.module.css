@@ -126,6 +126,8 @@
 
 .label {
     width: 80px;
+    font-size: 0.9em;
+    padding-top: 3px;
     display: flex;
     flex-direction: column;
 }
