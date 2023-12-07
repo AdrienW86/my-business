@@ -382,11 +382,11 @@
 
 .warning {
     width: 318px;
-    
-    margin: 40px auto;
+    margin: 40px auto 0 auto;
     border: 1px solid black;
     border-radius: 8px;
     display: flex;
+    height: 400px;
     flex-direction: column;
     justify-content: space-between;
     background-color: aliceblue;
@@ -398,21 +398,25 @@
     justify-content: center;
     color: #004AAD;
     background-color: #ffffff;
-    height: 80px;
+    height: 60px;
     width: 304px;
-    margin: 0;
-    padding: 0 7px;
+    margin: 0 0 10px 0;
+    padding: 3px 7px;
+    font-size: 1.2em;
     border-radius: 8px;
 }
 
 .pTitle {
-    margin: 8px auto;
+    margin: 4px auto;
     color: green;
+    font-size: 1em
 }
 
 .pw {
     line-height: 1.5;
     padding: 8px;
+    font-size: 1em;
+    margin: 0
 }
 
 .warningSpan {
@@ -421,10 +425,30 @@
 }
 
 .selectedClient {
-    
     height: 40px;
     margin: 0;
     display: flex;
     justify-content: center;
     height: 30px;
+}
+
+.warning_div {
+    margin: 0
+}
+
+.span_client {
+    color: green;
+    font-weight: bold;
+    position: relative;
+    margin-left: 5px
+}
+
+@media screen and (max-width: 320px){
+    .warning {
+        height: 350px;
+    }  
+    .pw {
+    font-size: 0.8em;
+    padding: 4px;
+   } 
 }

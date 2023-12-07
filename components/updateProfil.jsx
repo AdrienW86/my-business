@@ -120,7 +120,7 @@ const UpdateForm = ({ onSubmit }) => {
               })} 
               placeholder="Pays" onChange={handleChange} 
             />     
-                       
+             {errors.address?.country && <p className={styles.error}>{errors.address.country.message}</p>}          
 
             </div>
             <button className={styles.submit} type="submit">Mettre à jour</button>

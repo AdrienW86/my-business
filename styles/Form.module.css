@@ -119,3 +119,98 @@
 .input {
     height: 15px;  
 }
+
+@media only screen and (max-height: 620px) {
+
+    .title {
+        height: 8vh;
+    }
+    /* Vos styles CSS pour les écrans de moins de 320px de large */
+    .adress {
+        width: 280px;
+        margin: 2px auto;
+        padding:  0 8px;
+        font-size: 0.8em
+    }
+
+    .label_adress {
+        font-size: 1em;
+        font-weight: bold;
+        width: 100%;
+        color: #004AAD;
+        margin: 2px auto
+    }
+    .input {
+        height: 10px;
+    } 
+    .error {
+        height: 14px;
+        padding: 0
+    }
+    .box_btn {
+        margin: 2px auto;
+        height: 35px
+    }
+    .add_btn,.close_btn {
+        height: 25px;
+        margin: 4px auto;
+    }
+} 
+
+@media only screen and (min-height: 620px) and (max-height: 650px) {
+    /* Vos styles CSS pour les écrans de moins de 320px de large */
+    .adress {
+      
+        margin: 4px auto;
+        padding:  0 9px;
+        font-size: 0.9em
+    }
+
+    .label_adress {
+        font-size: 1em;
+        font-weight: bold;
+        width: 100%;
+        color: #004AAD;
+        margin: 4px auto
+    }
+    .error {
+        font-size: 0.8em;
+    }
+    .box_btn {
+        margin: 4px auto;
+        height: 40px
+    }
+    .add_btn,.close_btn {
+        height: 30px;
+        margin: 4px auto;
+    }
+} 
+
+@media only screen and (min-height: 651px) and (max-height: 815px) {
+    /* Vos styles CSS pour les écrans de moins de 320px de large */
+    .adress {
+      
+        margin: 1vh auto;
+        padding:  0 9px;
+        font-size: 0.9em
+    }
+
+    .label_adress {
+        font-size: 1em;
+        font-weight: bold;
+        width: 100%;
+        color: #004AAD;
+        margin: 1vh auto
+    }
+    .error {
+        font-size: 0.8em;
+    }
+    .box_btn {
+        margin: 1vh auto;
+        height: 40px
+    }
+    .add_btn,.close_btn {
+        height: 30px;
+        margin: 4px auto;
+    }
+} 

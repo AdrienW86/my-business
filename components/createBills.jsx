@@ -184,9 +184,9 @@ const addClient = () => {
         className={styles.btn_return}> Retour
       </button>
       <h2 className={styles.h2}>Informations du client</h2>
-      <div className={styles.selectedClient}> 
-         {selectedClient ? <div> Client séléctionné : {selectedClient.name} </div> : <div> Client séléctionné : à définir </div>
-       } </div>
+        <div className={styles.selectedClient}> Client sélectionné :
+          {selectedClient ?  <span className={styles.span_client}> {selectedClient.name} </span> : <span className={styles.span_client}> à définir </span>} 
+          </div>
         <div className={styles.box}>
        
           <button className={styles.toggleBtn} onClick={addClient}> Créer un client </button>
@@ -280,16 +280,16 @@ const addClient = () => {
   <section className={styles.warning}>
     <h2 className={styles.warningTitle}> Veuillez définir un client avant de poursuivre</h2>
     <h3 className={styles.pTitle}> Création d'un client</h3> 
-    <div> 
+    <div className={styles.warning_div}> 
       <p className={styles.pw} > Vous pouvez créer simplement un client en appuyer sur le bouton <span className={styles.warningSpan}>"Créer un client"</span>
       ci-dessus. Vous retrouverez l'ensemble de vos clients dans l'onglet "Vos clients"</p>
     </div>
 
     <h3 className={styles.pTitle}> Ajout d'un client à votre facture</h3>
-    <div  >
+    <div className={styles.warning_div} >
       <p className={styles.pw}> Lorsque vous avez déjà enregistré un client, il vous suffit de cliquer sur le bouton
-      <span className={styles.warningSpan}> "Ajouter client enregistré" </span> pour afficher la liste de vos clients et de sélectionner
-      celui de votre choix. Une fois sélectionné, les informations du client seront automatiquement
+      <span className={styles.warningSpan}> "Ajouter client enregistré" </span> pour afficher la liste de vos clients et faire
+       votre choix.Les informations du client seront automatiquement
       transmises sur votre facture ou votre devis.</p>
     </div>
   </section> }
