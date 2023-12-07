@@ -60,7 +60,8 @@
 }
 
 .h2 {
-    margin-bottom: 50px;
+    color: #004AAD;
+    margin: 10px auto;
 }
 .table {
     overflow-y: auto; 
@@ -95,7 +96,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin: 40px auto;
+    margin: 20px auto;
     padding: 8px;
     height: 30vh;
     min-width: 300px;
@@ -369,6 +370,7 @@
 .icons {
     padding-top: 6px;
 }
+
 .p {
     height: 50px;
     margin: 0;
@@ -378,3 +380,51 @@
     padding-left: 2px; 
 }
 
+.warning {
+    width: 318px;
+    
+    margin: 40px auto;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: aliceblue;
+}
+
+.warningTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #004AAD;
+    background-color: #ffffff;
+    height: 80px;
+    width: 304px;
+    margin: 0;
+    padding: 0 7px;
+    border-radius: 8px;
+}
+
+.pTitle {
+    margin: 8px auto;
+    color: green;
+}
+
+.pw {
+    line-height: 1.5;
+    padding: 8px;
+}
+
+.warningSpan {
+    color: #004AAD;
+    font-weight: bold;
+}
+
+.selectedClient {
+    
+    height: 40px;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    height: 30px;
+}

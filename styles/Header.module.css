@@ -4,6 +4,7 @@
     width: 100%;
     height: 20vh;
     justify-content: center;
+    overflow: hidden;
     background-color: #004AAD;
 }
 

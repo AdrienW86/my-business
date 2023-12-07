@@ -4,7 +4,6 @@ import Folder from '@/assets/folder.png'
 import 'jspdf-autotable';
 import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
-import AddClientForm from './addClient';
 import { useRouter } from 'next/router'
 import { useUser } from '@/utils/UserContext';
 
@@ -27,19 +26,18 @@ const CreateBills = (props) => {
   const [totalTTC, setTotalTTC] = useState(0);
   const [totalTVA, setTotalTVA] = useState(0);
 
-  const [clientName, setClientName] = useState('');
-  const [clientEmail, setClientEmail] = useState('');
-  const [clientPhone, setClientPhone] = useState('');
-  const [clientAddress, setClientAddress] = useState({
-     number: '',
-     street: '',
-     zipcode: '',
-     city: '',
-  });
+  const [selectedClient, setSelectedClient] = useState(null);
+
+  const SelectedClient = (el) => {
+    setSelectedClient(el)
+    Toggle()
+  }
+
 
   useEffect(() => {  
     fetchUserData();
-  }, []); 
+    console.log(selectedClient)
+  }, [selectedClient]); 
 
 useEffect(() => {
   if (user && user.clients) {
@@ -51,20 +49,13 @@ useEffect(() => {
 
 
 const [toggle, setToggle] = useState(false)
-const [toggle2, setToggle2] = useState(false)
 
 const Toggle = () => {
   setToggle(!toggle)
 }
 
-const Toggle2 = () => {
-  setToggle2(!toggle2)
-  console.log(toggle2)
-}
-const [modal, setModal] = useState(false)
-
 const addClient = () => {
-  setModal(!modal)
+  router.push('/clients/create')
 }
 
   const addPrestation = () => {
@@ -125,7 +116,7 @@ const addClient = () => {
     pdf.text(`${user.name}`, margin, 50);
     
     pdf.text(`Client: `, 15, 100);
-    pdf.text(`${clientName}`, margin, 100)
+    pdf.text(`${selectedClient.name}`, margin, 100)
 
     pdf.text(`${props.date}:`, 15, 150)
     pdf.text(`${props.number}:`, margin, 150);
@@ -142,10 +133,10 @@ const addClient = () => {
     pdf.text(`Email : ${user.email}`, margin, 72)
     pdf.text(`${user.address.number} ${user.address.street}`, margin, 78)
     pdf.text(`${user.address.zipcode} ${user.address.city}`, margin, 84)
-    pdf.text(`Téléphone : ${clientPhone}`, margin, 110)
-    pdf.text(`Email : ${clientEmail}`, margin, 116)
-    pdf.text(`${clientAddress.number} ${clientAddress.street}`, margin, 122)
-    pdf.text(`${clientAddress.zipcode} ${clientAddress.city}`, margin, 128)
+    pdf.text(`Téléphone : ${selectedClient.phone}`, margin, 110)
+    pdf.text(`Email : ${selectedClient.email}`, margin, 116)
+    pdf.text(`${selectedClient.address.number} ${selectedClient.address.street}`, margin, 122)
+    pdf.text(`${selectedClient.address.zipcode} ${selectedClient.address.city}`, margin, 128)
     pdf.text(`${dateFormatee}`, 15, 155)
     pdf.text(`${user.invoices.length +1}`, margin, 155);
     pdf.text(`30 jours`, 150, 155);
@@ -193,74 +184,48 @@ const addClient = () => {
         className={styles.btn_return}> Retour
       </button>
       <h2 className={styles.h2}>Informations du client</h2>
+      <div className={styles.selectedClient}> 
+         {selectedClient ? <div> Client séléctionné : {selectedClient.name} </div> : <div> Client séléctionné : à définir </div>
+       } </div>
         <div className={styles.box}>
-          <button className={styles.toggleBtn} onClick={Toggle}> Ajout non sauvegardé </button>
-          <button className={styles.toggleBtn} onClick={addClient}> Ajouter client </button>
-          <button onClick={Toggle2} className={styles.toggleBtn} > Ajouter client enregistré  </button> 
-          {toggle2 && 
-            <section className={styles.listClients}>
-              <div className={styles.toggleBtnCloseBox}>  
-                <button 
-                  onClick={Toggle2} 
-                  className={styles.toggleBtnClose} 
-                > fermer </button>
-              </div>
-              <h3 className={styles.modal_title}> Vos clients enregistrés </h3>
-              <div className={styles.modal_container}>            
-               {listClients.map((el, index) => (
-                  <div 
-                  onClick={() => {
-                    setSelectedClient(index);
-                    navigateToClientDetails(index);
-                  }}
-                  className={styles.rowModal} 
-                  key = {index}
-                > 
-                  <Image
-                    src={Folder}
-                    width={35}
-                    height={35}
-                    priority
-                    className={styles.icons}
-                    alt={props.alt}
-                  /> 
-                  <p className={styles.p}> {el.name} </p>               
-                </div>
-                 
-                ))}
-              </div>
-            </section>}
-                  
+       
+          <button className={styles.toggleBtn} onClick={addClient}> Créer un client </button>
+          <button onClick={Toggle} className={styles.toggleBtn} > Ajouter client enregistré  </button> 
+          {toggle && (
+  <section className={styles.listClients}>
+    <div className={styles.toggleBtnCloseBox}>
+      <button onClick={Toggle} className={styles.toggleBtnClose}>
+        Fermer
+      </button>
+    </div>
+    <h3 className={styles.modal_title}>Vos clients enregistrés</h3>
+    <div className={styles.modal_container}>
+      {listClients.map((el, index) => (
+        <div
+          onClick={() => SelectedClient(el)}
+          className={`${styles.rowModal} ${
+            selectedClient === el ? styles.selectedClient : ''
+          }`}
+          key={index}
+        >
+          <Image
+            src={Folder}
+            width={35}
+            height={35}
+            priority
+            className={styles.icons}
+            alt={props.alt}
+          />
+          <p className={styles.p}>{el.name}</p>
         </div>
-        {modal &&  <AddClientForm modal ={setModal}/>}
-        {toggle && 
-          <section className={styles.modal}>  
-           <button className={styles.modalBtn} onClick={Toggle}> Fermer </button>
-          <div className={styles.modalRow}>
-              <label className={styles.modalLabel}>Nom du client:</label>
-              <input className={styles.modalInput} type="text" value={clientName} onChange={(e) => setClientName(e.target.value)} />
-          </div>
-          <div className={styles.modalRow}>
-              <label className={styles.modalLabel}>Email du client:</label>
-              <input className={styles.modalInput} type="text" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} />
-          </div>
-          <div className={styles.modalRow}>
-              <label className={styles.modalLabel}>Téléphone du client:</label>
-              <input className={styles.modalInput} type="text" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
-          </div>
-          <div className={styles.modalRow}>
-              <label className={styles.modalLabel}>Adresse du client:</label>
-              <input className={styles.modalInput} type="text" placeholder="Numéro" value={clientAddress.number} onChange={(e) => setClientAddress({ ...clientAddress, number: e.target.value })} />
-              <input className={styles.modalInput} type="text" placeholder="Rue" value={clientAddress.street} onChange={(e) => setClientAddress({ ...clientAddress, street: e.target.value })} />
-              <input className={styles.modalInput} type="text" placeholder="Code postal" value={clientAddress.zipcode} onChange={(e) => setClientAddress({ ...clientAddress, zipcode: e.target.value })} />
-              <input className={styles.modalInput} type="text" placeholder="Ville" value={clientAddress.city} onChange={(e) => setClientAddress({ ...clientAddress, city: e.target.value })} />
-          </div>
-          <div className={styles.submitBox}>
-            <button className={styles.modalSubmit} onClick={Toggle}> Valider </button>
-          </div> 
-          </section> 
-        }
-      <div className={styles.container}>    
+      ))}
+    </div>
+  </section>
+)}
+  </div>
+{selectedClient ?
+  <section>
+  <div className={styles.container}>    
         <div className={styles.services}>
           <div className={styles.row}>
             <label className={styles.label}>Prestation:</label>
@@ -306,10 +271,30 @@ const addClient = () => {
           </tr>
         </tbody>
       </table>
-      </div>
+      </div> 
       <div className={styles.btn_generate_box}> 
         <button className={styles.generate} onClick={generatePDF}>Générer PDF</button>
       </div>  
+
+  </section> : 
+  <section className={styles.warning}>
+    <h2 className={styles.warningTitle}> Veuillez définir un client avant de poursuivre</h2>
+    <h3 className={styles.pTitle}> Création d'un client</h3> 
+    <div> 
+      <p className={styles.pw} > Vous pouvez créer simplement un client en appuyer sur le bouton <span className={styles.warningSpan}>"Créer un client"</span>
+      ci-dessus. Vous retrouverez l'ensemble de vos clients dans l'onglet "Vos clients"</p>
+    </div>
+
+    <h3 className={styles.pTitle}> Ajout d'un client à votre facture</h3>
+    <div  >
+      <p className={styles.pw}> Lorsque vous avez déjà enregistré un client, il vous suffit de cliquer sur le bouton
+      <span className={styles.warningSpan}> "Ajouter client enregistré" </span> pour afficher la liste de vos clients et de sélectionner
+      celui de votre choix. Une fois sélectionné, les informations du client seront automatiquement
+      transmises sur votre facture ou votre devis.</p>
+    </div>
+  </section> }
+    
+    
     </section>
    </>
   );
