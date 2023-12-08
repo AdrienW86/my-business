@@ -2,19 +2,23 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 
 const serviceSchema = new mongoose.Schema({
-  id: {
+  quantity: {
     type: Number,
     required: true,
   },
-  number: {
-    type: Number,
-    required: true,
-  },
-  name: {
+  prestation: {
     type: String,
     required: true,
   },
-  price: {
+  prix: {
+    type: Number,
+    required: true,
+  },
+  prix: {
+    type: Number,
+    required: true,
+  },
+  prix: {
     type: Number,
     required: true,
   },
@@ -44,36 +48,60 @@ const addressSchema = new mongoose.Schema({
 });
 
 const invoiceSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: true,
+  title: {
+    type: String
+  },
+  user : {
+    type: String
+  },
+  client : {
+    type: String
+  },
+  userPhone : {
+    type: String
+  },
+  clientPhone : {
+    type: String
+  },
+  userEmail : {
+    type: String
+  },
+  clientEmail : {
+    type: String
+  },
+
+  tva : {
+    type: Number
+  },
+
+  userAddress: addressSchema,
+  clientAddress: addressSchema,
+  services: [serviceSchema],
+  date: {
+    type: String
+  },
+  dateValue: {
+    type: String
+  },
+  validity: {
+    type: String,
+    default: "30 jours"
   },
   number: {
-    type: Number,
-    required: true,
+    type: String
   },
-  name: {
-    type: String,
-    required: true,
+  numberValue: {
+    type: String
   },
-  date: {
-    type: String,
-    required: true,
+  totalHT: {
+    type: String
   },
-  email: {
-    type: String,
-    required: true,
+  totalTVA: {
+    type: String
   },
-  phone: {
-    type: String,
-    required: true,
+  totalTTC: {
+    type: String
   },
-  total: {
-    type: Number,
-    required: true,
-  },
-  services: [serviceSchema],
-  address: addressSchema,
 });
 
 const clientSchema = new mongoose.Schema({
@@ -137,7 +165,6 @@ const userSchema = new mongoose.Schema({
     default: false
   },
   logo: {
-    // Vous devez définir le type approprié pour le logo, peut-être String pour le chemin d'accès à l'image
     type: String,
     default: '../assets/user.png'
   },
@@ -151,7 +178,7 @@ const userSchema = new mongoose.Schema({
   },
   clients: [clientSchema],
   invoices: [invoiceSchema],
-  quotes: [invoiceSchema], // Assurez-vous de renommer devis en quotes si nécessaire
+  quotes: [invoiceSchema], 
 });
 
 module.exports = mongoose.models.User || mongoose.model("User", userSchema);

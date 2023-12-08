@@ -53,7 +53,7 @@ const UpdateForm = ({ onSubmit }) => {
             <input className={styles.input} 
               {...register('tva', {
                 required: 'La TVA est requise',
-                pattern: /^[A-Za-z0-9]+$/i,
+                pattern: /^[0-9]+(\.[0-9]+)?$/,
               })} 
               placeholder="Votre T.V.A" onChange={handleChange} 
             />

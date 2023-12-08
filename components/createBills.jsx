@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Folder from '@/assets/folder.png'
-import 'jspdf-autotable';
-import jsPDF from 'jspdf';
 import styles from '../styles/CreateBills.module.css';
 import { useRouter } from 'next/router'
 import { useUser } from '@/utils/UserContext';
+import { generatePdf }  from '@/utils/generatePdf';
 
 const CreateBills = (props) => {
 
@@ -13,9 +12,10 @@ const CreateBills = (props) => {
   const [listClients, setListClients] = useState([]);
   
   const router = useRouter()
+
   const navigation = (path) => { 
     router.push(path)
-}
+  }
 
   const [prestations, setPrestations] = useState([]);
   const [prestation, setPrestation] = useState('');
@@ -26,27 +26,23 @@ const CreateBills = (props) => {
   const [totalTTC, setTotalTTC] = useState(0);
   const [totalTVA, setTotalTVA] = useState(0);
 
-  const [selectedClient, setSelectedClient] = useState(null);
+  const [client, setclient] = useState(null);
 
   const SelectedClient = (el) => {
-    setSelectedClient(el)
+    setclient(el)
     Toggle()
   }
 
-
   useEffect(() => {  
     fetchUserData();
-    console.log(selectedClient)
-  }, [selectedClient]); 
+  }, [client]); 
 
 useEffect(() => {
   if (user && user.clients) {
     const clientsNames = user.clients.map(client => client);
     setListClients(clientsNames);
-    console.log(listClients)
   }
 }, [user]);
-
 
 const [toggle, setToggle] = useState(false)
 
@@ -65,13 +61,13 @@ const addClient = () => {
       const totalTTC = (parseFloat(prixHT) + parseFloat(tva)).toFixed(2);
 
       setPrestations([...prestations, { prestation, quantity, prix, prixHT, tva, totalTTC }]);
+      console.log(prestations)
       setPrestation('');
       setQuantity('');
       setPrix('');
-
       setTotalHT(prevTotalHT => prevTotalHT + parseFloat(prixHT));
       setTotalTTC(prevTotalTTC => prevTotalTTC + parseFloat(totalTTC));
-      setTotalTVA(prevTotalTVA => prevTotalTVA + parseFloat(tva));
+      setTotalTVA(prevTotalTVA => prevTotalTVA + parseFloat(tva));  
     }
   };
 
@@ -93,88 +89,70 @@ const addClient = () => {
     return prestations.reduce((sum, item) => sum + parseFloat(item.totalTTC - item.tva), 0).toFixed(2);
   }
 
-  const generatePDF = () => {
+  const savePDFToDatabase = async (bills) => {
+    try {
+      console.log(bills)
+      // Envoyez les données du PDF à votre serveur en utilisant fetch.
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/save-pdf', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify( bills ),    
+      });
+
+      if (!response.ok) {
+        throw new Error('Échec de la requête pour enregistrer le PDF dans la base de données.');
+      }
+
+      const responseData = await response.json();
+    
+      // Assurez-vous de mettre à jour les données de l'utilisateur (vous devrez peut-être implémenter une fonction fetchUserData ici).
+    } catch (error) {
+      console.error('Erreur lors de l\'enregistrement du PDF dans la base de données :', error);
+    }
+  };
+
     const maDate = new Date();
     const jour = maDate.getDate();
     const mois = maDate.getMonth() + 1;
     const annee = maDate.getFullYear();
     const dateFormatee = `${jour < 10 ? '0' : ''}${jour}/${mois < 10 ? '0' : ''}${mois}/${annee}`;
-
-    const pdf = new jsPDF();
-    const margin = 80;
-        
-    // Ajouter le titre
-    pdf.setFontSize(32);
-  
-    pdf.setTextColor('#0060df')
-    pdf.text(`${props.title}`, 15, 20);
-
-    pdf.setFontSize(14);
-    pdf.setFont("helvetica", "bold");
-
-    pdf.text(`Vendeur: `, 15, 50);
-    pdf.text(`${user.name}`, margin, 50);
-    
-    pdf.text(`Client: `, 15, 100);
-    pdf.text(`${selectedClient.name}`, margin, 100)
-
-    pdf.text(`${props.date}:`, 15, 150)
-    pdf.text(`${props.number}:`, margin, 150);
-    pdf.text(`${props.validity}`, 150, 150);
-
-    pdf.setTextColor(0, 0, 0);
-    
-    pdf.setFont("helvetica", "normal");
-    pdf.setFontSize(10);
-
-    // Infos
-    pdf.text(`Siret : ${user.siret}`, margin, 60)
-    pdf.text(`Téléphone : ${user.phone}`, margin, 66)
-    pdf.text(`Email : ${user.email}`, margin, 72)
-    pdf.text(`${user.address.number} ${user.address.street}`, margin, 78)
-    pdf.text(`${user.address.zipcode} ${user.address.city}`, margin, 84)
-    pdf.text(`Téléphone : ${selectedClient.phone}`, margin, 110)
-    pdf.text(`Email : ${selectedClient.email}`, margin, 116)
-    pdf.text(`${selectedClient.address.number} ${selectedClient.address.street}`, margin, 122)
-    pdf.text(`${selectedClient.address.zipcode} ${selectedClient.address.city}`, margin, 128)
-    pdf.text(`${dateFormatee}`, 15, 155)
-    pdf.text(`${user.invoices.length +1}`, margin, 155);
-    pdf.text(`30 jours`, 150, 155);
-
-    // Ajouter les prestations dans le tableau
-    const tableData = [
-      ['Prestation', 'Quantité', 'Prix unitaire','Prix HT', `T.V.A. (${user.tva}%)`, 'Prix TTC'],
-      ...prestations.map(item => [
-        item.prestation,
-        item.quantity,
-        item.prix,
-        item.prixHT + '€',
-        item.tva + '€',
-        item.totalTTC + '€',
-      ]),
-    ];
-
-    const totalTitle = ['Total', 'Total HT',  `T.V.A. (${user.tva}%)`, 'Total TTC'];
     const total = ['', totalHT.toFixed(2) + '€',  totalTVA.toFixed(2) + '€', totalTTC.toFixed(2) + '€'];
+  
+    // savePDFToDatabase(PDF);
 
-    pdf.autoTable({
-      startY: 165,
-      head: [tableData[0]],
-      body: tableData.slice(1),
-      theme: 'striped',
-      columnStyles: { 0: { cellWidth: 60 }, 1: { cellWidth: 20 }, 2: { cellWidth: 25 }, 3: { cellWidth: 25 }, 4: { cellWidth: 30 }, 5: { cellWidth: 22 } },
-    });
+    const generatePDF = () => {
+      const bills = {
+        title: props.title,
 
-    pdf.autoTable({    
-      startY: pdf.lastAutoTable.finalY + 5 ,
-      head: [totalTitle],
-      body: [total],
-      theme: 'striped',
-      columnStyles: { 0: { cellWidth: 105 }, 1: { cellWidth: 25 }, 2: { cellWidth: 30 }, 3: { cellWidth: 22 }},
-    });
-    pdf.save('facture.pdf');
-  };
+        tva: user.tva,
+        user: user.name,
+        userSiret: user.siret,
+        userPhone: user.phone,
+        userEmail: user.email,
+        userAddress: user.address,
 
+        client: client.name,
+        clientPhone: client.phone,
+        clientEmail: client.email,
+        clientAddress: client.address,
+
+        services: prestations,
+        date: props.date,
+        dateValue : dateFormatee,    
+        validity: props.validity,  
+        number: props.number,
+        numberValue: user.invoices.length +1,
+        totalHT: total[1],
+        totalTVA: total[2],
+        totalTTC: total[3], 
+      }
+      generatePdf(bills)
+      savePDFToDatabase(bills)
+    }
   return (
     <>
     <section className={styles.form}>    
@@ -185,7 +163,7 @@ const addClient = () => {
       </button>
       <h2 className={styles.h2}>Informations du client</h2>
         <div className={styles.selectedClient}> Client sélectionné :
-          {selectedClient ?  <span className={styles.span_client}> {selectedClient.name} </span> : <span className={styles.span_client}> à définir </span>} 
+          {client ?  <span className={styles.span_client}> {client.name} </span> : <span className={styles.span_client}> à définir </span>} 
           </div>
         <div className={styles.box}>
        
@@ -204,7 +182,7 @@ const addClient = () => {
         <div
           onClick={() => SelectedClient(el)}
           className={`${styles.rowModal} ${
-            selectedClient === el ? styles.selectedClient : ''
+            client === el ? styles.selectedClient : ''
           }`}
           key={index}
         >
@@ -223,7 +201,7 @@ const addClient = () => {
   </section>
 )}
   </div>
-{selectedClient ?
+{client ?
   <section>
   <div className={styles.container}>    
         <div className={styles.services}>
@@ -273,7 +251,7 @@ const addClient = () => {
       </table>
       </div> 
       <div className={styles.btn_generate_box}> 
-        <button className={styles.generate} onClick={generatePDF}>Générer PDF</button>
+        <button className={styles.generate} onClick={() => generatePDF()}>Générer PDF</button>
       </div>  
 
   </section> : 

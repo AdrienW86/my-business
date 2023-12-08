@@ -81,7 +81,6 @@ export const UserProvider = ({ children }) => {
 
         if (response.ok) {
           const userData = await response.json();
-          console.log('User data:', userData);
           updateUser(userData);
           setUserAddress(userData.address);
         } else {
