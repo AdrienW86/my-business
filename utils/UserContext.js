@@ -87,7 +87,7 @@ export const UserProvider = ({ children }) => {
           console.error('Error fetching user data:', response.statusText);
         }
       } else {
-        console.error('Token missing');
+       // console.error('Token missing');
       }
     } catch (error) {
       console.error('Error fetching user data:', error.message);

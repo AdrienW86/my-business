@@ -30,6 +30,7 @@ const CreateBills = (props) => {
 
   const SelectedClient = (el) => {
     setclient(el)
+    console.log(el)
     Toggle()
   }
 
@@ -40,7 +41,9 @@ const CreateBills = (props) => {
 useEffect(() => {
   if (user && user.clients) {
     const clientsNames = user.clients.map(client => client);
+   
     setListClients(clientsNames);
+   
   }
 }, [user]);
 
@@ -125,21 +128,22 @@ const addClient = () => {
     // savePDFToDatabase(PDF);
 
     const generatePDF = () => {
+      console.log(prestations)
+      console.log(client)
+      console.log(client.index)
       const bills = {
         title: props.title,
-
         tva: user.tva,
         user: user.name,
-        userSiret: user.siret,
+        siret: user.siret,
         userPhone: user.phone,
         userEmail: user.email,
         userAddress: user.address,
-
+        indexClient: client.index,
         client: client.name,
         clientPhone: client.phone,
         clientEmail: client.email,
         clientAddress: client.address,
-
         services: prestations,
         date: props.date,
         dateValue : dateFormatee,    
@@ -150,6 +154,7 @@ const addClient = () => {
         totalTVA: total[2],
         totalTTC: total[3], 
       }
+      console.log(bills)
       generatePdf(bills)
       savePDFToDatabase(bills)
     }

@@ -71,36 +71,28 @@ export default function ClientsId() {
   }, []);
 
   const deleteClient = async (clientId) => {
-    window.confirm('Voulez vous vraiment supprimer ce client ?')
-    const token = localStorage.getItem('token');
-    try {
-      
-  
-const response = await fetch(`/api/delete-client?clientId=${clientId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const updatedData = await response.json();
-       console.log(clientId)
-        console.log('Client supprimé:', updatedData);
-        router.push('/clients')
-        // Vous pouvez également mettre à jour l'état local de l'utilisateur avec les nouvelles données
-        // ou effectuer toute autre action nécessaire après la suppression du client
-      } else {
-        console.error('Error deleting client:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error deleting client:', error.message);
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ${user.clients[clientId].name} ?` );        
+    if (confirmDelete) {
+      const token = localStorage.getItem('token');
+        try { 
+          const response = await fetch(`/api/delete-client?clientId=${clientId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (response.ok) {
+            router.push('/clients')
+          } else {
+            console.error('Error deleting client:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error deleting client:', error.message);
+        }
     }
   };
   
-  
-
   const Toggle = () => {
     setToggle(!toggle);
   };

@@ -25,8 +25,10 @@ async function handler(req, res) {
       return res.status(404).json({ error: 'Utilisateur non trouvé' });
     }
 
+    console.log(user.clients.length)
     // Créer un nouvel objet client
     const newClient = {
+      index: user.clients.length,
       name: data.name,
       phone: data.phone,
       email: data.email,
@@ -42,7 +44,7 @@ async function handler(req, res) {
 
     // Ajouter le nouvel objet client au tableau "clients" de l'utilisateur
     user.clients.push(newClient);
-
+console.log(newClient)
     // Enregistrez les modifications de l'utilisateur dans la base de données
     await user.save();
 

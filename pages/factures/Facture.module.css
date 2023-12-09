@@ -2,22 +2,34 @@
     height: 70vh; 
 }
 
+.btnClose {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 30px;
+    width: 30px;
+    border: 1px solid black;
+    color: white;
+    background-color: red;
+}
+
 .container {
-    height: 60vh;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     background-color: #c0cee0;
 }
 
 .card {
     display: flex;
-    height: 50vh;
-    width: 280px;
-    margin: 0 auto;
+    height: 550px;
+    width: 300px;
+    margin: auto;
     font-weight: 600;
     justify-content: center;
-    border-radius: 24px; 
     border: 2px solid black;
     background-color: white;
     -webkit-box-shadow: 5px 5px 15px -3px #000000; 
@@ -31,42 +43,71 @@
 }
 
 .title {
-    font-size: 1.5em;
-    border-radius: 20px 20px 0 0px;
-    margin: 0;
-    height: 40px;
-    width: 100%;
+    font-size: 1.2em;
+    margin: 0 20px 10px 15px;
+   
     padding-top: 12px;
-    text-align: center;
-    color: #ffffff;
-    background-color: red;
+    text-align: left;
+    color: #004AAD;
 }
 
+.label {
+    width: 100px;
+    height: 230px;
+}
+
+.boxInfos {
+    width: 200px;
+}
+
+.h3, .h4 {
+    width: 120px;
+    font-size: 0.9em;
+    color: #004AAD;
+    text-align: left;
+}
+
+.h4 {
+    position: relative;
+    top: 78px;
+}
 .span {
+   width: 120px;
     color: #004AAD;
+    text-align: left;
+    font-size: 0.9em;
 }
 
-.adress {
-    font-size: 3vh;
-    width: 100%;
-    margin-top: 4vh;
-    color: #004AAD;
+.infos {
+    margin: 2px 0;
+    font-size: 0.6em
 }
+
+.box_invoice {
+    display: flex;
+    width: 100%;  
+}
+
+.invoiceP { 
+    width: 90px;
+    color: #004AAD;
+    font-size: 0.6em;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.invoice_value { 
+   width: 90px;
+    font-size: 0.6em;
+    margin: 0 auto;
+    text-align: center;
+}
+
 
 .body_card {
-    height: 40vh;
-    font-size: 2vh;
-    padding: 16px;
+    padding: 0 16px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-}
-
-.dash {
-    width: 90%;
-    margin:auto;
-    border-bottom: 1px solid #004AAD;
+    justify-content: center; 
 }
 
 .box {
@@ -76,18 +117,14 @@
     text-align: center;  
 }
 
-.h3 {
-    color: #004AAD;
-    margin: 10px auto;
-    width: 105px;
-}
-
 .btn {
     width: 105px;
     padding: 4px;
-    margin: auto;
+    font-weight: 500;
     color: #004AAD;
     transition: .4s ease-in-out;
+    border-radius: 8px;
+    margin: 0 20px;
     border: 1px solid #004AAD;
     background-color: #ffffff;
 }
@@ -103,17 +140,18 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    transition: .4s ease-in-out;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 .delete {
-    width: 150px;
+    width: 105px;
     padding: 4px;
-    margin: 20px auto;
     font-weight: 500;
-    color: red;
+    color: red; 
+    transition: .4s ease-in-out;
     border: 1px solid red;
+    margin: 0 20px;
     border-radius: 8px;
     background-color: #ffffff;
 }
@@ -122,4 +160,64 @@
     cursor: pointer;
     color: white;
     background-color: red;
+}
+
+.table {
+    margin: 10px 7px 20px 7px;
+    max-height: 300px; /* Vous pouvez ajuster la hauteur maximale selon vos besoins */
+    overflow-y: auto; /* Ajoute une barre de défilement vertical si nécessaire */
+    border: 1px solid black;
+}
+
+.service, .tableHeader {
+    display: flex;
+    font-size: 0.5em;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0 2px;
+}
+
+.tableHeader {
+    color: white;
+    background-color: #004AAD;
+}
+
+.service {
+    height: 15px;
+}
+
+.service:nth-child(even) {
+    background-color: rgb(235, 235, 235);
+}
+
+.prestation, .quantity, .prix, .tva, .prixTTC, .prixHT {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 15px;
+    margin: 0
+}
+
+.prestation {
+    width: 40px;   
+}
+
+.quantity {
+    width: 35px;  
+}
+
+.prix {
+    width: 45px;    
+}
+
+.prixHT {
+    width: 45px;    
+}
+
+.tva {
+    width: 55px;
+}
+.prixTTC {
+    width: 40px;
 }

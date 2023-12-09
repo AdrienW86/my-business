@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import Menu from '../../components/menu'
+import Menu from '../../components/clientsList'
 import Folder from '../../assets/folder.png'
 import { useUser } from '@/utils/UserContext';
 

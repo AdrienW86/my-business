@@ -64,12 +64,12 @@ export default function Menu(props) {
                       className={styles.icons}
                       alt={props.alt}
                     /> 
-                    <p className={styles.name}> {el.client} </p>  
+                    <p className={styles.name}> {el.name} </p>  
                   </div>
                   <div>
-                    <p className={styles.p}> Date: </p> 
+                    <p className={styles.p}> Factures: {el.invoices.length} </p> 
                     <p className={styles.date}> {el.dateValue} </p>
-                    <p className={styles.p}> Montant: </p>
+                    <p className={styles.p}> Devis: {el.quotes.length} </p>
                     <p className={styles.price}> {el.totalTTC} </p>
                   <div className={styles.box}>
                     <button className={styles.btn}> Voir </button>

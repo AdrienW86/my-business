@@ -16,55 +16,21 @@ async function handler(req, res) {
     const userId = decodedToken.userId;
 
     const pdfData = req.body;
-
-   
-    console.log('Contenu du PDF (Buffer) :', pdfData);
-
-    // Enregistrez le contenu du PDF dans la base de données
-   
-  console.log(pdfData.services)
-   
-console.log(pdfData.user)
-    // Ajoutez la référence de la facture à l'utilisateur
     const user = await User.findById(userId);
 
-    const bills = {
-      title: pdfData.title,
-      tva: pdfData.tva,
-      user: pdfData.user,
-      userSiret: pdfData.userSiret,
-      userPhone: pdfData.userPhone,
-      userEmail: pdfData.userEmail,
-      userAddress: pdfData.userAddress,
-      
-      client: pdfData.client,
-      clientPhone: pdfData.clientPhone,
-      clientEmail: pdfData.clientEmail,
-      clientAddress: pdfData.clientAddress,
-      
-     tva: pdfData,
-      services: {
-        quantity: pdfData.services.quantity,
-        prestation: pdfData.services.prestation,
-        prixHT: pdfData.services.prixHT,
-        prix: pdfData.services.prix,
-        totalTTC: pdfData.services.totalTTC,
-        tva: pdfData.services.tva,
+    const id = pdfData.indexClient
 
-      },
-      date: pdfData.date,
-      dateValue : pdfData.dateValue,    
-      validity: pdfData.validity,  
-      number: pdfData.number,
-      numberValue: pdfData.numberValue,
-      totalHT: pdfData.totalHT,
-      totalTVA: pdfData.totalTVA,
-      totalTTC: pdfData.totalTTC, 
+    console.log(pdfData)
+
+    console.log(id)
+    if(pdfData.title == "Facture") {
+      user.invoices.push(pdfData)
+      user.clients[id].invoices.push(pdfData);
     }
-   
-    console.log(bills)
-    user.invoices.push(pdfData);
-   
+    else if(pdfData.title == "Devis") {
+      user.quotes.push(pdfData)
+      user.clients[id].quotes.push(pdfData);
+    }
     await user.save();
 
     return res.status(200).json(user);
@@ -73,5 +39,4 @@ console.log(pdfData.user)
     return res.status(500).end();
   }
 }
-
 export default handler;

@@ -27,7 +27,7 @@ export const generatePdf = (bills) => {
   pdf.setFontSize(10);
 
   // Infos
-  pdf.text(`Siret : ${bills.userSiret}`, margin, 60)
+  pdf.text(`Siret : ${bills.siret}`, margin, 60)
   pdf.text(`Téléphone : ${bills.userPhone}`, margin, 66)
   pdf.text(`Email : ${bills.userEmail}`, margin, 72)
   pdf.text(`${bills.userAddress.number} ${bills.userAddress.street}`, margin, 78)
@@ -46,7 +46,7 @@ export const generatePdf = (bills) => {
     ...prestations.map(item => [
       item.prestation,
       item.quantity,
-      item.prix,
+      item.prix + '€',
       item.prixHT + '€',
       item.tva + '€',
       item.totalTTC + '€',
@@ -54,7 +54,7 @@ export const generatePdf = (bills) => {
   ];
 
   const totalTitle = ['Total', 'Total HT',  `T.V.A. (${bills.tva}%)`, 'Total TTC'];
-  const total = ['', bills.totalHT + '€',  bills.totalTVA + '€', bills.totalTTC + '€'];
+  const total = ['', bills.totalHT,  bills.totalTVA , bills.totalTTC  ];
 
   pdf.autoTable({
     startY: 165,

@@ -4,23 +4,22 @@ const validator = require('validator');
 const serviceSchema = new mongoose.Schema({
   quantity: {
     type: Number,
-    required: true,
   },
   prestation: {
     type: String,
-    required: true,
   },
   prix: {
     type: Number,
-    required: true,
   },
-  prix: {
-    type: Number,
-    required: true,
+  prixHT: {
+    type: Number, 
   },
-  prix: {
+  totalTTC: {
     type: Number,
-    required: true,
+   
+  },
+  tva: {
+    type: Number,
   },
 });
 
@@ -57,6 +56,9 @@ const invoiceSchema = new mongoose.Schema({
   client : {
     type: String
   },
+  siret: {
+    type: Number
+  },
   userPhone : {
     type: String
   },
@@ -69,8 +71,10 @@ const invoiceSchema = new mongoose.Schema({
   clientEmail : {
     type: String
   },
-
   tva : {
+    type: Number
+  },
+  indexClient: {
     type: Number
   },
 
@@ -105,6 +109,9 @@ const invoiceSchema = new mongoose.Schema({
 });
 
 const clientSchema = new mongoose.Schema({
+  index: {
+    type: Number
+  },
   name: {
     type: String,
     required: true,
@@ -119,6 +126,7 @@ const clientSchema = new mongoose.Schema({
   },
   address: addressSchema,
   invoices: [invoiceSchema],
+  quotes: [invoiceSchema]
 });
 
 const userSchema = new mongoose.Schema({

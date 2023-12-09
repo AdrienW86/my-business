@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import styles from '@/styles/Home.module.css';
-import Cookies from 'js-cookie';
 
 export default function Login() {
   const router = useRouter();
@@ -36,9 +35,7 @@ export default function Login() {
        
         const { token } = await response.json();
         localStorage.setItem('token', token)
-        // Utilisez la fonction login du contexte pour stocker le token
-       
-        
+         
         router.push('/profil');
       } else {
         const errorMessage = await response.text();

@@ -1,7 +1,4 @@
-
 import { UserProvider } from '@/utils/UserContext'
-
-
 
 export default function App({
   Component,
