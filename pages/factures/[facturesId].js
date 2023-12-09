@@ -11,30 +11,27 @@ import styles from './Facture.module.css';
 export default function FacturesId() {
 
   const { user, fetchUserData } = useUser();
-  const [prestations, setPrestations] = useState()
-
   const router = useRouter();
   const { id } = router.query;
   const userId = parseInt(id, 10);
 
-  const bills = user.invoices[userId]
-  const index = user.invoices[userId].indexClient
-  console.log(bills)
-
-  const Services = () => {
-    if (user && user.invoices[userId] && user.invoices[userId].services) {
-      setPrestations(user.invoices[userId].services);
-    }
-  }
+  const [prestations, setPrestations] = useState()
 
   useEffect(() => {
-    fetchUserData();
-    Services();
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        await fetchUserData();
+        if (user && user.invoices[userId] && user.invoices[userId].services) {
+          setPrestations(user.invoices[userId].services);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des données:", error);
+        alert("Erreur lors du chargement des données du client");
+      }
+    }; 
 
-  useEffect(() => {
-    console.log(prestations);
-  }, [prestations]);
+    fetchData();
+  }, [id, user, userId]);
 
   const formatDecimal = (value) => {
     return parseFloat(value).toFixed(2);
@@ -45,7 +42,7 @@ export default function FacturesId() {
   }
 
   const handleDeleteInvoice = async (index) => {
-    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ce document ?` );        
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer cette facture ?` );        
     if (confirmDelete) {
       const token = localStorage.getItem('token');
         try { 

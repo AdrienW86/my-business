@@ -8,9 +8,7 @@ import styles from './Client.module.css';
 import { useUser } from '@/utils/UserContext';
 import UpdateClientForm from '@/components/updateClient';
 
-
 export default function ClientsId() {
-
   const { user, fetchUserData } = useUser();
   const router = useRouter();
   const { id } = router.query;

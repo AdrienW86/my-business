@@ -67,9 +67,9 @@ export default function Menu(props) {
                     <p className={styles.name}> {el.name} </p>  
                   </div>
                   <div>
-                    <p className={styles.p}> Factures: {el.invoices.length} </p> 
+                    <p className={styles.p}> <span className={styles.client_invoice}> Factures: </span> {el.invoices.length} </p> 
                     <p className={styles.date}> {el.dateValue} </p>
-                    <p className={styles.p}> Devis: {el.quotes.length} </p>
+                    <p className={styles.p}> <span className={styles.client_quote}> Devis: </span> {el.quotes.length} </p>
                     <p className={styles.price}> {el.totalTTC} </p>
                   <div className={styles.box}>
                     <button className={styles.btn_client}> Voir </button>

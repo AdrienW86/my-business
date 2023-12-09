@@ -9,32 +9,28 @@ import { generatePdf }  from '@/utils/generatePdf';
 import styles from '@/pages/factures/Facture.module.css';
 
 export default function DevisId() {
-
   const { user, fetchUserData } = useUser();
-  const [prestations, setPrestations] = useState()
-
   const router = useRouter();
   const { id } = router.query;
-  const userId = parseInt(id, 10);
+  const userId = parseInt(id);
 
-  const bills = user.quotes[userId]
-  const index = user.quotes[userId].indexClient
-  console.log(bills)
-
-  const Services = () => {
-    if (user && user.quotes[userId] && user.quotes[userId].services) {
-      setPrestations(user.quotes[userId].services);
-    }
-  }
+  const [prestations, setPrestations] = useState([]);
 
   useEffect(() => {
-    fetchUserData();
-    Services();
-  }, [id]);
+    const fetchData = async () => {
+      try {
+        await fetchUserData();
+        if (user && user.quotes[userId] && user.quotes[userId].services) {
+          setPrestations(user.quotes[userId].services);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des données:", error);
+        alert("Erreur lors du chargement des données du client");
+      }
+    }; 
 
-  useEffect(() => {
-    console.log(prestations);
-  }, [prestations]);
+    fetchData();
+  }, [id, user, userId]);
 
   const formatDecimal = (value) => {
     return parseFloat(value).toFixed(2);
@@ -45,31 +41,31 @@ export default function DevisId() {
   }
 
   const handleDeleteInvoice = async (index) => {
-    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ce document ?` );        
+    const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ce devis ?` );        
     if (confirmDelete) {
       const token = localStorage.getItem('token');
-        try { 
-          const response = await fetch(`/api/delete-quote?clientId=${index}`, {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-          });
-          if (response.ok) {
-            router.push('/devis')
-          } else {
-            console.error('Error deleting quote:', response.statusText);
-          }
-        } catch (error) {
-          console.error('Error deleting quote:', error.message);
+      try { 
+        const response = await fetch(`/api/delete-quote?clientId=${index}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (response.ok) {
+          router.push('/devis')
+        } else {
+          console.error('Error deleting quote:', response.statusText);
         }
+      } catch (error) {
+        console.error('Error deleting quote:', error.message);
+      }
     }
   }
 
   const download = () => {
     const bills = user.quotes[userId]
-    console.log(bills)
+    console.log(bills.title)
     generatePdf(bills)
   }
  

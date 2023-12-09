@@ -69,6 +69,7 @@
     height: 180px;
     margin: 10px;  
     font-size: 0.9em;
+    border: 1px solid #004AAD;
     background-color: rgb(255, 255, 255);
     transition: .4s ease-in-out;  
     -webkit-box-shadow: 5px 5px 15px -3px #000000; 
@@ -124,20 +125,31 @@
     justify-content: center;
 }
 
-.btn {
+.btn, .btn_client {
     width: 80px;
     margin: 5px auto;
     color: #004AAD;
     font-weight: bold;
     border-radius: 4px;
     border: 1px solid #004AAD;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.btn:hover, .btn_client:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #004AAD;
 }
 
 .btn_client {
-    width: 80px;
-    margin: 10px auto;
-    color: #004AAD;
-    font-weight: bold;
-    border-radius: 4px;
-    border: 1px solid #004AAD;
+    margin: 20px auto; 
+}
+.client_invoice {
+    color: red;
+}
+
+.client_quote {
+    color: green;
 }
