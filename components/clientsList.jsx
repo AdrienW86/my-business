@@ -72,7 +72,7 @@ export default function Menu(props) {
                     <p className={styles.p}> Devis: {el.quotes.length} </p>
                     <p className={styles.price}> {el.totalTTC} </p>
                   <div className={styles.box}>
-                    <button className={styles.btn}> Voir </button>
+                    <button className={styles.btn_client}> Voir </button>
                   </div>
                    
                   </div>                 
