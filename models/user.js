@@ -50,6 +50,9 @@ const invoiceSchema = new mongoose.Schema({
   title: {
     type: String
   },
+  index: {
+    type: Number
+  },
   user : {
     type: String
   },

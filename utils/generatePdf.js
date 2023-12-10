@@ -3,8 +3,6 @@ import jsPDF from 'jspdf';
 
 export const generatePdf = (bills) => {
 
-    console.log(bills)
-
   const prestations = bills.services
   const pdf = new jsPDF();
   const margin = 80;
@@ -37,7 +35,7 @@ export const generatePdf = (bills) => {
   pdf.text(`${bills.clientAddress.number} ${bills.clientAddress.street}`, margin, 122)
   pdf.text(`${bills.clientAddress.zipcode} ${bills.clientAddress.city}`, margin, 128)
   pdf.text(`${bills.dateValue}`, 15, 155)
-  pdf.text(`${bills.numberValue}`, margin, 155);
+  pdf.text(`202${bills.index}`, margin, 155);
   pdf.text(`30 jours`, 150, 155);
 
   // Ajouter les prestations dans le tableau
@@ -71,5 +69,5 @@ export const generatePdf = (bills) => {
     theme: 'striped',
     columnStyles: { 0: { cellWidth: 105 }, 1: { cellWidth: 25 }, 2: { cellWidth: 30 }, 3: { cellWidth: 22 }},
   });
-  pdf.save('facture.pdf');
+  pdf.save(`${bills.title}202${bills.index}.pdf`);
 }

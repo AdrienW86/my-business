@@ -30,7 +30,7 @@ export default function DevisId() {
     }; 
 
     fetchData();
-  }, [id, user, userId]);
+  }, [userId]);
 
   const formatDecimal = (value) => {
     return parseFloat(value).toFixed(2);
@@ -40,12 +40,12 @@ export default function DevisId() {
     router.push('/devis');
   }
 
-  const handleDeleteInvoice = async (index) => {
+  const handleDeleteInvoice = async (userId) => {
     const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ce devis ?` );        
     if (confirmDelete) {
       const token = localStorage.getItem('token');
       try { 
-        const response = await fetch(`/api/delete-quote?clientId=${index}`, {
+        const response = await fetch(`/api/delete-quote?clientId=${userId}`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -65,7 +65,6 @@ export default function DevisId() {
 
   const download = () => {
     const bills = user.quotes[userId]
-    console.log(bills.title)
     generatePdf(bills)
   }
  
@@ -155,7 +154,7 @@ export default function DevisId() {
             </div>
             <div className={styles.box_delete}>
               <button className={styles.btn } onClick={download}> Télécharger </button>
-              <button className={styles.delete} onClick={handleDeleteInvoice}> Supprimer </button>
+              <button className={styles.delete} onClick={() => handleDeleteInvoice(userId)}> Supprimer </button>
             </div>
           </section>
         )}

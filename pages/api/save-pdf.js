@@ -8,7 +8,7 @@ async function handler(req, res) {
     const { authorization } = req.headers;
 
     if (req.method !== 'POST') {
-      return res.status(405).end();  // Méthode non autorisée
+      return res.status(405).end(); 
     }
 
     const token = authorization.replace('Bearer ', '');
@@ -20,14 +20,14 @@ async function handler(req, res) {
 
     const id = pdfData.indexClient
 
-    console.log(pdfData)
+    console.log(pdfData.title)
 
     console.log(id)
     if(pdfData.title == "Facture") {
       user.invoices.push(pdfData)
       user.clients[id].invoices.push(pdfData);
     }
-    else if(pdfData.title == "Devis") {
+     if(pdfData.title == "Devis") {
       user.quotes.push(pdfData)
       user.clients[id].quotes.push(pdfData);
     }

@@ -7,6 +7,8 @@ import { useRouter } from 'next/router';
 import styles from './Client.module.css';
 import { useUser } from '@/utils/UserContext';
 import UpdateClientForm from '@/components/updateClient';
+import Invoice from '@/components/invoice';
+import Quote from '@/components/quote';
 
 export default function ClientsId() {
   const { user, fetchUserData } = useUser();
@@ -15,9 +17,12 @@ export default function ClientsId() {
   const clientId = parseInt(id);
 
   const [toggle, setToggle] = useState(false);
-  console.log(clientId)
-  
+  const [invoices, setInvoices] = useState(false);
+  const [quotes, setQuotes] = useState(false);
 
+  const [oneInvoice, setOneInvoice] = useState(false)
+  const [oneQuote, setOneQuote] = useState(false)
+  
   const updateClient = async (clientId, formData) => {
     const token = localStorage.getItem('token');
     try {
@@ -28,11 +33,9 @@ export default function ClientsId() {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          // Utilisez les données du formulaire ici
           name: formData.name,
           phone: formData.phone,
           email: formData.email,
-          // ... autres champs
           address: {
             number: formData.address.number,
             street: formData.address.street,
@@ -95,13 +98,26 @@ export default function ClientsId() {
     setToggle(!toggle);
   };
 
-  const showInvoice = (id) => {
-    router.push(`/factures/[factureId]?id=+${id}`);
-  };
+const [invoiceId, setInvoiceId] = useState()
 
-  const showDevis = (id) => {
-    router.push(`/devis/[devis]?id=+${id}`);
-  };
+  const showInvoice = (index) => {
+    setOneInvoice(!oneInvoice)
+    setInvoiceId(index)
+  }
+
+  const showQuote = (index) => {
+    setOneQuote(!oneInvoice)
+    setInvoiceId(index)
+  }
+ 
+
+  const showInvoices = () => {
+    setInvoices(!invoices)
+  }
+
+  const showQuotes = () => {
+    setQuotes(!quotes)
+  }
 
   return (
     <>
@@ -138,10 +154,10 @@ export default function ClientsId() {
                   )}
                   <p className={styles.dash}></p>
                   <div className={styles.box}>
-                    <button  className={styles.btn}>
+                    <button  onClick={showInvoices} className={styles.btn}>
                       Voir factures
                     </button>
-                    <button  className={styles.btn}>
+                    <button onClick={showQuotes} className={styles.btn}>
                       Voir devis
                     </button>
                   </div>                
@@ -158,6 +174,47 @@ export default function ClientsId() {
       {toggle &&
         <UpdateClientForm clientId ={clientId} updateClient={updateClient} />
       }
+      {invoices && 
+        <section className={styles.modal}>
+        <h2 className={styles.modalTitle}> Facture {user.clients[clientId].name}</h2> 
+        <button className={styles.btnClose}onClick={showInvoices}> Fermer</button>
+        <div className={styles.documentsContainer}>
+            {user.clients[clientId].invoices.map((el, index) => (
+              <div 
+                key= {index}
+                className={styles.listModal}
+              > 
+                <h3 className={styles.h3}> {index} Facture n° 202{el.index} </h3>
+                <p className={styles.p}> Date: <span className={styles.spanDate}>{el.dateValue} </span> </p>
+                <p className={styles.p}> Montant: <span className={styles.spanPrice}> {el.totalTTC} </span>  </p>
+                <button className={styles.modalBtn} onClick={() => showInvoice(index)}> Voir </button>
+              </div>
+            ))}
+          </div>
+     </section>
+      }
+      {quotes && 
+       <section className={styles.modal}>
+        <h2 className={styles.modalTitle}> Devis de {user.clients[clientId].name}</h2> 
+        <button className={styles.btnClose}onClick={showQuotes}> Fermer</button>
+        <div className={styles.documentsContainer}>
+            {user.clients[clientId].quotes.map((el, index) => (
+              <div 
+                key= {index}
+                className={styles.listModal}
+              > 
+                <h3 className={styles.h3}> Devis n° 202{el.index} </h3>
+                <p className={styles.p}> Date: <span className={styles.spanDate}>{el.dateValue} </span> </p>
+                <p className={styles.p}> Montant: <span className={styles.spanPrice}> {el.totalTTC} </span>  </p>
+                <button className={styles.modalBtn} onClick={() => showQuote(index)}> Voir</button>
+              </div>
+            ))}
+          </div>
+         
+     </section>
+      }
+       {oneInvoice && <Invoice user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={invoices}/>}
+       {oneQuote && <Quote user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={quotes}/>}
       <Footer />
     </>
   );

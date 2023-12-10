@@ -10,13 +10,11 @@ const AddClientForm = () => {
   const navigation = () => {
     router.push('/clients')
   }
-
-
+  
   useEffect(() => {
     const checkToken = () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        // Rediriger vers une page de connexion ou effectuer d'autres actions
         router.push('/login');
       }
     };
@@ -25,8 +23,6 @@ const AddClientForm = () => {
   }, [router]);
 
   const { register, handleSubmit, control, formState: { errors } } = useForm();
-
-
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem('token');
@@ -48,7 +44,6 @@ const AddClientForm = () => {
     } catch (error) {
       console.error('Erreur lors de l\'ajout du client:', error.message);
     }
-
   };
 
   return (
@@ -78,8 +73,6 @@ const AddClientForm = () => {
         />    
       </div>
       {errors.email && <p className={styles.error}>{errors.email.message}</p>}
-
-
       <div className={styles.row}>
         <label className={styles.label}>Téléphone:</label>
         <Controller
@@ -90,8 +83,6 @@ const AddClientForm = () => {
         />    
       </div>
       {errors.phone && <p className={styles.error}>{errors.phone.message}</p>}
-
-
     </div>
     <div className={styles.adress}>
       <label className={styles.label_adress}>Adresse:</label>
@@ -104,9 +95,7 @@ const AddClientForm = () => {
             render={({ field }) => <input placeholder="Numéro" className={styles.input}  {...field} type="number" />}
           />
         </div>
-        {errors.address?.number && (
-  <p className={styles.error}>{errors.address.number.message}</p>
-)}
+        {errors.address?.number && (<p className={styles.error}>{errors.address.number.message}</p>)}
         <div className={styles.row}>
           <label className={styles.label}>Rue:</label>
           <Controller
@@ -117,10 +106,7 @@ const AddClientForm = () => {
             placeholder="Nom de la rue" className={styles.input} {...field} />}
           />
         </div>
-        {errors.address?.street && (
-  <p className={styles.error}>{errors.address.street.message}</p>
-)}
-        
+        {errors.address?.street && (<p className={styles.error}>{errors.address.street.message}</p>)}        
         <div className={styles.row}>
           <label className={styles.label}>Ville:</label>
           <Controller
@@ -140,8 +126,7 @@ const AddClientForm = () => {
               type: 'number',
               required: 'Code postal requis (5 chiffres)',
               pattern: {
-                value: /^\d{5}$/,
-               
+                value: /^\d{5}$/,               
               },
             }}
             render={({ field }) => <input placeholder="Code postal" className={styles.input}  {...field} type="number" />}
@@ -171,9 +156,7 @@ const AddClientForm = () => {
       </div>   
     </form>
   </div>
-
   </>   
   );
 };
-
 export default AddClientForm;

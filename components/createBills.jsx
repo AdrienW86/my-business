@@ -9,12 +9,14 @@ import { generatePdf }  from '@/utils/generatePdf';
 const CreateBills = (props) => {
 
   const { user, fetchUserData } = useUser();
-  const [listClients, setListClients] = useState([]);
+  const [ listClients, setListClients] = useState([]);
+  const [ url, setUrl ] = useState()
   
   const router = useRouter()
+  const currentUrl = router.pathname
 
-  const navigation = (path) => { 
-    router.push(path)
+  const navigation = () => { 
+    router.push(props.path)
   }
 
   const [prestations, setPrestations] = useState([]);
@@ -30,22 +32,24 @@ const CreateBills = (props) => {
 
   const SelectedClient = (el) => {
     setclient(el)
-    console.log(el)
     Toggle()
   }
 
-  useEffect(() => {  
+  useEffect(() => {     
     fetchUserData();
   }, [client]); 
 
 useEffect(() => {
   if (user && user.clients) {
-    const clientsNames = user.clients.map(client => client);
-   
-    setListClients(clientsNames);
-   
+    const clientsNames = user.clients.map(client => client);   
+    setListClients(clientsNames);  
+    if(currentUrl === '/factures/create') {
+      setUrl(user.invoices.length )
+    }else if(currentUrl === '/devis/create'){
+      setUrl(user.quotes.length )
+    }
   }
-}, [user]);
+}, [user, url]);
 
 const [toggle, setToggle] = useState(false)
 
@@ -56,7 +60,6 @@ const Toggle = () => {
 const addClient = () => {
   router.push('/clients/create')
 }
-
   const addPrestation = () => {
     if (prestation && prix && quantity) {
       const prixHT = parseFloat(prix * quantity).toFixed(2);
@@ -94,8 +97,6 @@ const addClient = () => {
 
   const savePDFToDatabase = async (bills) => {
     try {
-      console.log(bills)
-      // Envoyez les données du PDF à votre serveur en utilisant fetch.
       const token = localStorage.getItem('token');
       const response = await fetch('/api/save-pdf', {
         method: 'POST',
@@ -103,7 +104,7 @@ const addClient = () => {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify( bills ),    
+        body: JSON.stringify(bills),    
       });
 
       if (!response.ok) {
@@ -111,8 +112,7 @@ const addClient = () => {
       }
 
       const responseData = await response.json();
-    
-      // Assurez-vous de mettre à jour les données de l'utilisateur (vous devrez peut-être implémenter une fonction fetchUserData ici).
+     
     } catch (error) {
       console.error('Erreur lors de l\'enregistrement du PDF dans la base de données :', error);
     }
@@ -125,13 +125,9 @@ const addClient = () => {
     const dateFormatee = `${jour < 10 ? '0' : ''}${jour}/${mois < 10 ? '0' : ''}${mois}/${annee}`;
     const total = ['', totalHT.toFixed(2) + '€',  totalTVA.toFixed(2) + '€', totalTTC.toFixed(2) + '€'];
   
-    // savePDFToDatabase(PDF);
-
     const generatePDF = () => {
-      console.log(prestations)
-      console.log(client)
-      console.log(client.index)
       const bills = {
+        index: url,
         title: props.title,
         tva: user.tva,
         user: user.name,
@@ -149,21 +145,23 @@ const addClient = () => {
         dateValue : dateFormatee,    
         validity: props.validity,  
         number: props.number,
-        numberValue: user.invoices.length +1,
+        numberValue: user.invoices.length + 1,
         totalHT: total[1],
         totalTVA: total[2],
         totalTTC: total[3], 
       }
-      console.log(bills)
-      generatePdf(bills)
-      savePDFToDatabase(bills)
+      generatePdf(bills)    
+      savePDFToDatabase(bills)  
+      alert("Votre document a bien été enregistré") 
+      navigation()
     }
+
   return (
     <>
     <section className={styles.form}>    
       <h1 className={styles.title}> {props.title}</h1>  
       <button 
-        onClick={() => navigation(props.path)}
+        onClick={navigation}
         className={styles.btn_return}> Retour
       </button>
       <h2 className={styles.h2}>Informations du client</h2>
@@ -256,7 +254,7 @@ const addClient = () => {
       </table>
       </div> 
       <div className={styles.btn_generate_box}> 
-        <button className={styles.generate} onClick={() => generatePDF()}>Générer PDF</button>
+        <button className={styles.generate} onClick={generatePDF}>Générer PDF</button>
       </div>  
 
   </section> : 

@@ -16,8 +16,10 @@ async function handler(req, res) {
       const decodedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || 'votre_clé_secrète');
       const userId = decodedToken.userId;
       const id = req.query.clientId
+      const invoiceId = req.query.invoiceId
 
       console.log(id)
+      console.log(invoiceId)
   
       const user = await User.findById(userId);
   
@@ -29,7 +31,7 @@ async function handler(req, res) {
         return res.status(404).json({ error: 'Client non trouvé' });
       }
   
-      user.invoices.splice(id, 1);
+      user.clients[id].invoices.splice(invoiceId, 1);
   
       await user.save();
   
@@ -40,5 +42,4 @@ async function handler(req, res) {
       res.status(500).json({ error: "Internal Server Error" });
     }
   }
-
-export default handler;
+export default handler

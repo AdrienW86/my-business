@@ -29,9 +29,8 @@ export default function FacturesId() {
         alert("Erreur lors du chargement des données du client");
       }
     }; 
-
     fetchData();
-  }, [id, user, userId]);
+  }, [userId]);
 
   const formatDecimal = (value) => {
     return parseFloat(value).toFixed(2);
@@ -41,12 +40,12 @@ export default function FacturesId() {
     router.push('/factures');
   }
 
-  const handleDeleteInvoice = async (index) => {
+  const handleDeleteInvoice = async (userId) => {
     const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer cette facture ?` );        
     if (confirmDelete) {
       const token = localStorage.getItem('token');
         try { 
-          const response = await fetch(`/api/delete-invoice?clientId=${index}`, {
+          const response = await fetch(`/api/delete-invoice?clientId=${userId}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -66,7 +65,6 @@ export default function FacturesId() {
 
   const download = () => {
     const bills = user.invoices[userId]
-    console.log(bills)
     generatePdf(bills)
   }
  
@@ -156,7 +154,7 @@ export default function FacturesId() {
             </div>
             <div className={styles.box_delete}>
               <button className={styles.btn } onClick={download}> Télécharger </button>
-              <button className={styles.delete} onClick={handleDeleteInvoice}> Supprimer </button>
+              <button className={styles.delete} onClick={() => handleDeleteInvoice(userId)}> Supprimer </button>
             </div>
           </section>
         )}
