@@ -16,7 +16,5 @@
 
 .span {
     font-weight: bold;
-    color: black; 
-    text-shadow: 2px 2px 2px #4e4e4e; 
-    padding-left: 2px
+    color: rgb(255, 255, 255); 
 }

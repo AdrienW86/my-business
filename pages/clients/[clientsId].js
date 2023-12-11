@@ -178,7 +178,7 @@ export default function ClientsId() {
                 key= {index}
                 className={styles.listModal}
               > 
-                <h3 className={styles.h3}> {index} Facture n° 202{el.index} </h3>
+                <h3 className={styles.h3}> Facture n° 202{el.index} </h3>
                 <p className={styles.p}> Date: <span className={styles.spanDate}>{el.dateValue} </span> </p>
                 <p className={styles.p}> Montant: <span className={styles.spanPrice}> {el.totalTTC} </span>  </p>
                 <button className={styles.modalBtn} onClick={() => showInvoice(index)}> Voir </button>

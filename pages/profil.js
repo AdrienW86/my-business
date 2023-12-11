@@ -106,10 +106,10 @@ export default function Profil() {
                 </div>
                 <div className={styles.infos}>
                   <h1 className={styles.name}>{user.name} </h1>
-                    <div className={styles.status}>
+                    {/* <div className={styles.status}>
                       <p className={styles.profit}> Chiffre d'affaire : <span style={{color: "green", marginLeft: "2px"}}> {user.profit} € </span></p>
                       <p className={styles.expenses}> Dépenses : <span style={{color: "red", marginLeft: "2px"}}> {user.expenses} € </span> </p>
-                    </div>                                      
+                    </div>                                       */}
                 </div>              
               </section>
               {userAddress &&
