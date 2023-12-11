@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
 import Header from '../components/header'
 import Nav from '../components/nav'
 import UpdateForm from '@/components/updateProfil'
@@ -11,6 +12,7 @@ import { useUser } from '@/utils/UserContext';
 
 export default function Profil() {
 
+  const router = useRouter()
   const { user, userAddress, updateUser, fetchUserData } = useUser();
 
     const [toggle, setToggle] = useState(false)
@@ -18,7 +20,11 @@ export default function Profil() {
     const Toggle = () => {
       setToggle(!toggle)
     }
-  
+
+    const siret = user && user.siret;
+    console.log(siret);
+    
+
     const handleUpdate = async (updatedData) => {
       try {
         const token = localStorage.getItem('token'); 
@@ -41,21 +47,51 @@ export default function Profil() {
         console.error('Erreur lors de la mise à jour du profil:', error.message);
       }
     };
-  
-    useEffect(() => { 
-     
-     
+
+    const handleDelete = async () => {
+      const confirmDelete = window.confirm("Voulez-vous vraiment supprimer votre compte ?");
+    
+      if (confirmDelete) {
+        try {
+          const token = localStorage.getItem('token');
+          const response = await fetch('/api/delete', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+          });
+    
+          if (response.ok) {
+            console.log('Profil supprimé avec succès!');
+            localStorage.clear()
+            router.push('/')
+          } else {
+            console.error('Erreur lors de la suppression du profil:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Erreur lors de la suppression du profil:', error.message);
+        }
+      }
+    };
+    
+    useEffect(() => {     
       fetchUserData();
-    },[]);
-    
-    
+    },[siret]);
+     
   return (
   <>
     <Header />  
       <main className={styles.main} >
         <Nav /> 
+          {siret == 0 ? 
+            <section className={styles.warning}> 
+              <p className={styles.titleWarning}> Pour pouvoir générer rapidement vos documents </p>
+              <p className={styles.pWarning}> Veuillez compléter votre profil avant de continuer </p>
+            </section> : null
+          }
           {toggle &&
-            <UpdateForm onSubmit={handleUpdate} />
+            <UpdateForm onSubmit={handleUpdate} onDelete ={() => handleDelete(user)}/>
           }
           {user && (
             <div className={styles.container}>

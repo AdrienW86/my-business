@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Logo from '../assets/wallpaper.png'
+import Logo from '../assets/wallpapers.png'
 import { Inter } from 'next/font/google'
 import Login from '@/components/login'
 import Footer from '../components/footer'

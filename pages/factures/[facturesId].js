@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/header';
 import Nav from '@/components/nav';
-import ButtonReturn from '@/components/buttonReturn';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/router';
 import { useUser } from '@/utils/UserContext';
@@ -72,7 +71,6 @@ export default function FacturesId() {
     <>
       <Header />
       <main className={styles.main}>
-      <ButtonReturn url ='/factures'/>
         <Nav />
         {user && (
           <section className={styles.container}>

@@ -23,6 +23,7 @@ const AddClientForm = () => {
   }, [router]);
 
   const { register, handleSubmit, control, formState: { errors } } = useForm();
+  
   const onSubmit = async (data) => {
     try {
       const token = localStorage.getItem('token');

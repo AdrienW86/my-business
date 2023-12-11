@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Header from '@/components/header';
 import Nav from '@/components/nav';
-import ButtonReturn from '@/components/buttonReturn';
 import Footer from '@/components/footer';
 import { useRouter } from 'next/router';
 import styles from './Client.module.css';
@@ -19,9 +18,10 @@ export default function ClientsId() {
   const [toggle, setToggle] = useState(false);
   const [invoices, setInvoices] = useState(false);
   const [quotes, setQuotes] = useState(false);
-
   const [oneInvoice, setOneInvoice] = useState(false)
   const [oneQuote, setOneQuote] = useState(false)
+
+  const [invoiceId, setInvoiceId] = useState()
   
   const updateClient = async (clientId, formData) => {
     const token = localStorage.getItem('token');
@@ -48,8 +48,6 @@ export default function ClientsId() {
   
       if (response.ok) {
         const updatedData = await response.json();
-        console.log('Client mis à jour:', updatedData.updatedClient);
-        // Vous pouvez également mettre à jour l'état local du client avec les nouvelles données
       } else {
         console.error('Error updating client:', response.statusText);
       }
@@ -61,14 +59,13 @@ export default function ClientsId() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await fetchUserData(); // Assurez-vous que les données de l'utilisateur sont chargées
-        
+        await fetchUserData();    
       } catch (error) {
         console.error("Erreur lors du chargement des données:", error);
         alert("Erreur lors du chargement des données du client");
       }
     }; 
-    fetchData(); // Appelez la fonction fetchData
+    fetchData(); 
   }, []);
 
   const deleteClient = async (clientId) => {
@@ -98,19 +95,16 @@ export default function ClientsId() {
     setToggle(!toggle);
   };
 
-const [invoiceId, setInvoiceId] = useState()
-
   const showInvoice = (index) => {
     setOneInvoice(!oneInvoice)
     setInvoiceId(index)
   }
 
   const showQuote = (index) => {
-    setOneQuote(!oneInvoice)
+    setOneQuote(!oneQuote)
     setInvoiceId(index)
   }
  
-
   const showInvoices = () => {
     setInvoices(!invoices)
   }
@@ -122,8 +116,7 @@ const [invoiceId, setInvoiceId] = useState()
   return (
     <>
       <Header />
-      <main className={styles.main}>
-        <ButtonReturn url='/clients' />
+      <main className={styles.main}>     
         <Nav />
         {user && (
           <section className={styles.container}>
@@ -177,8 +170,9 @@ const [invoiceId, setInvoiceId] = useState()
       {invoices && 
         <section className={styles.modal}>
         <h2 className={styles.modalTitle}> Facture {user.clients[clientId].name}</h2> 
-        <button className={styles.btnClose}onClick={showInvoices}> Fermer</button>
-        <div className={styles.documentsContainer}>
+        <button className={styles.btnClose}onClick={showInvoices}>X</button>
+        {user.clients[clientId].invoices.length === 0 ? <p className={styles.warning}> Aucun élément à afficher</p> :
+          <div className={styles.documentsContainer}>      
             {user.clients[clientId].invoices.map((el, index) => (
               <div 
                 key= {index}
@@ -191,13 +185,15 @@ const [invoiceId, setInvoiceId] = useState()
               </div>
             ))}
           </div>
+        }
      </section>
       }
       {quotes && 
        <section className={styles.modal}>
         <h2 className={styles.modalTitle}> Devis de {user.clients[clientId].name}</h2> 
-        <button className={styles.btnClose}onClick={showQuotes}> Fermer</button>
-        <div className={styles.documentsContainer}>
+        <button className={styles.btnClose}onClick={showQuotes}> X</button>
+        {user.clients[clientId].quotes.length === 0 ? <p className={styles.warning}> Aucun élément à afficher</p> :
+          <div className={styles.documentsContainer}>
             {user.clients[clientId].quotes.map((el, index) => (
               <div 
                 key= {index}
@@ -210,11 +206,11 @@ const [invoiceId, setInvoiceId] = useState()
               </div>
             ))}
           </div>
-         
+        } 
      </section>
       }
-       {oneInvoice && <Invoice user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={invoices}/>}
-       {oneQuote && <Quote user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={quotes}/>}
+       {oneInvoice && <Invoice user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={invoices} toggle={showInvoice}/>}
+       {oneQuote && <Quote user ={user} clientId = {clientId} invoiceId ={invoiceId} data ={quotes} toggle={showQuote}/>}
       <Footer />
     </>
   );

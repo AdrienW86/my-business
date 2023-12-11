@@ -4,6 +4,7 @@
     left: 0;
     height: 100vh;
     width: 100%;  
+    z-index: 5;
     background-color: #a9b8ca;
 }
 
@@ -113,8 +114,8 @@
    font-weight: bold;  
 }
 
-.submit {
-    width: 200px;
+.submit, .delete {
+    width: 150px;
     height: 40px;
     margin: 20px auto;
     border: 2px solid #004AAD;
@@ -126,10 +127,29 @@
     box-shadow: 5px 5px 15px -3px #000000;
 }
 
+.delete {
+    color: red;
+    border-color: red;
+}
+
+.box_btn {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+}
+
 .submit:hover {
     cursor: pointer;
     color: white;
     background-color: #004AAD;
+}
+
+.delete:hover {
+    cursor: pointer;
+    color: white;
+    background-color: red;
 }
 
 .btnClose {
@@ -163,10 +183,10 @@
    .label {
     margin: 0
    }
-   .submit {
+   .submit, .delete {
     margin: 2px auto;
     height: 30px;
-    width: 150px;
+    width: 120px;
    }
    .adress {
     margin: 3px auto;

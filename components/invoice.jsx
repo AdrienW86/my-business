@@ -6,9 +6,6 @@ import styles from '@/pages/factures/Facture.module.css';
 export default function Invoice(props) {
 
   const invoice = props.user.clients[props.clientId].invoices[props.invoiceId]
-
-  console.log(props.invoiceId)
- 
   const handleDeleteInvoice = async (clientId, invoiceId) => {
     const confirmDelete = window.confirm(`Êtes-vous sûr de vouloir supprimer ce devis ?` );        
     if (confirmDelete) {
@@ -37,43 +34,42 @@ export default function Invoice(props) {
   }
  
   return (
-    <section>
-      
-          <section className={styles.container}>
-             <button className={styles.btnClose} > X </button>
-            <div className={styles.card}>
-              <div className={styles.item}>
-                <h1 className={styles.title}> {invoice.title} </h1>
-                <div className={styles.body_card}>
-                  <div className={styles.label}>
-                    <p className={styles.h3}> Vendeur:</p>
-                    <p className={styles.h4}> Client:</p> 
-                  </div>
-                  <div className={styles.boxInfos}>
-                    <p className={styles.span}> {invoice.user} </p>
-                    <p className={styles.infos}> Siret: {invoice.siret} </p>
-                    <p className={styles.infos}> Téléphone: {invoice.userPhone} </p>
-                    <p className={styles.infos}> Email: {invoice.userEmail} </p>
-                    <p className={styles.infos}> {invoice.userAddress.number} {invoice.userAddress.street} </p>
-                    <p className={styles.infos}> {invoice.userAddress.zipcode} {invoice.userAddress.city} </p>               
-                    <p className={styles.span}> {invoice.client} </p>                      
-                    <p className={styles.infos}> Téléphone: {invoice.userPhone} </p>
-                    <p className={styles.infos}> Email: {invoice.userEmail} </p>
-                    <p className={styles.infos}> {invoice.clientAddress.number} {invoice.clientAddress.street}</p>
-                    <p className={styles.infos}> {invoice.clientAddress.zipcode} {invoice.clientAddress.city}  </p>
-                  </div>                       
+    <section>   
+      <section className={styles.container}>
+        <button className={styles.btnClose} onClick={props.toggle} > X </button>
+        <div className={styles.card}>
+            <div className={styles.item}>
+             <h1 className={styles.title}> {invoice.title} </h1>
+              <div className={styles.body_card}>
+                <div className={styles.label}>
+                  <p className={styles.h3}> Vendeur:</p>
+                  <p className={styles.h4}> Client:</p> 
                 </div>
-                <div className={styles.box_invoice}>
-                  <p className={styles.invoiceP}> {invoice.date} </p>
-                  <p className={styles.invoiceP}> {invoice.number}  </p>
-                  <p className={styles.invoiceP}> {invoice.validity} </p>                  
-                </div>
-                <div className={styles.box_invoice}>
-                  <p className={styles.invoice_value}> {invoice.dateValue} </p>
-                  <p className={styles.invoice_value}> {invoice.numberValue} </p>
-                  <p className={styles.invoice_value}> 30 jours </p>                  
-                </div>
-                 {invoice.services &&
+                <div className={styles.boxInfos}>
+                  <p className={styles.span}> {invoice.user} </p>
+                  <p className={styles.infos}> Siret: {invoice.siret} </p>
+                  <p className={styles.infos}> Téléphone: {invoice.userPhone} </p>
+                  <p className={styles.infos}> Email: {invoice.userEmail} </p>
+                  <p className={styles.infos}> {invoice.userAddress.number} {invoice.userAddress.street} </p>
+                  <p className={styles.infos}> {invoice.userAddress.zipcode} {invoice.userAddress.city} </p>               
+                  <p className={styles.span}> {invoice.client} </p>                      
+                  <p className={styles.infos}> Téléphone: {invoice.userPhone} </p>
+                  <p className={styles.infos}> Email: {invoice.userEmail} </p>
+                  <p className={styles.infos}> {invoice.clientAddress.number} {invoice.clientAddress.street}</p>
+                  <p className={styles.infos}> {invoice.clientAddress.zipcode} {invoice.clientAddress.city}  </p>
+                </div>                       
+              </div>
+              <div className={styles.box_invoice}>
+                <p className={styles.invoiceP}> {invoice.date} </p>
+                <p className={styles.invoiceP}> {invoice.number}  </p>
+                <p className={styles.invoiceP}> {invoice.validity} </p>                  
+              </div>
+              <div className={styles.box_invoice}>
+                <p className={styles.invoice_value}> {invoice.dateValue} </p>
+                <p className={styles.invoice_value}> {invoice.numberValue} </p>
+                <p className={styles.invoice_value}> 30 jours </p>                  
+              </div>
+              {invoice.services &&
                 <div className={styles.table}>
                   <div className={styles.tableHeader}> 
                     <p className={styles.prestation}> Prestation  </p>
@@ -113,14 +109,14 @@ export default function Invoice(props) {
                     <p className={styles.prixTTC}> {invoice.totalTTC} </p>                   
                    </div>                                 
                 </div> 
-                }        
-              </div>
+              }        
             </div>
-            <div className={styles.box_delete}>
-              <button className={styles.btn } onClick={download}> Télécharger </button>
-              <button className={styles.delete} onClick={() => handleDeleteInvoice(props.clientId, props.invoiceId)}> Supprimer </button>
-            </div>
-        </section>    
+          </div>
+          <div className={styles.box_delete}>
+            <button className={styles.btn } onClick={download}> Télécharger </button>
+            <button className={styles.delete} onClick={() => handleDeleteInvoice(props.clientId, props.invoiceId)}> Supprimer </button>
+          </div>
+      </section>    
     </section>
   );
 }

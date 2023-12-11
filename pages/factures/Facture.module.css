@@ -11,6 +11,15 @@
     border: 1px solid black;
     color: white;
     background-color: red;
+    transition: .4s ease-in-out;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
+}
+
+.btnClose:hover {
+    cursor: pointer;
+    background-color: rgb(150, 2, 2);
+
 }
 
 .container {
@@ -44,8 +53,7 @@
 
 .title {
     font-size: 1.2em;
-    margin: 0 20px 10px 15px;
-   
+    margin: 0 20px 10px 15px;  
     padding-top: 12px;
     text-align: left;
     color: #004AAD;
@@ -103,7 +111,6 @@
     text-align: center;
 }
 
-
 .body_card {
     padding: 0 16px;
     display: flex;
@@ -127,6 +134,8 @@
     margin: 0 20px;
     border: 1px solid #004AAD;
     background-color: #ffffff;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
 }
 
 .btn:hover {
@@ -154,6 +163,8 @@
     margin: 0 20px;
     border-radius: 8px;
     background-color: #ffffff;
+    -webkit-box-shadow: 5px 5px 15px -3px #000000; 
+    box-shadow: 5px 5px 15px -3px #000000;
 }
 
 .delete:hover {
@@ -164,8 +175,8 @@
 
 .table {
     margin: 10px 7px 20px 7px;
-    max-height: 300px; /* Vous pouvez ajuster la hauteur maximale selon vos besoins */
-    overflow-y: auto; /* Ajoute une barre de défilement vertical si nécessaire */
+    max-height: 300px; 
+    overflow-y: auto;
     border: 1px solid black;
 }
 

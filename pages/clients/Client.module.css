@@ -207,7 +207,7 @@
     border: 2px solid black;
     right: 0px;
     height: 30px;
-    width: 60px;
+    width: 30px;
     color: white;
     transition: .4s ease-in-out;
     -webkit-box-shadow: 5px 5px 15px -3px #000000; 
@@ -307,4 +307,11 @@
 .spanPrice {
     color: red;
     font-weight: bold;
+}
+
+.warning {
+    position: relative;
+    top: 200px;
+    text-align: center;
+    font-size: 1.5em;
 }

@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image'
 import Folder from '@/assets/folder.png'
-import styles from '../styles/CreateBills.module.css';
 import { useRouter } from 'next/router'
 import { useUser } from '@/utils/UserContext';
 import { generatePdf }  from '@/utils/generatePdf';
+import styles from '../styles/CreateBills.module.css';
 
 const CreateBills = (props) => {
 
   const { user, fetchUserData } = useUser();
   const [ listClients, setListClients] = useState([]);
   const [ url, setUrl ] = useState()
+  const [ clientIndex, setClientIndex ] = useState()
+
   
   const router = useRouter()
   const currentUrl = router.pathname
@@ -30,8 +32,10 @@ const CreateBills = (props) => {
 
   const [client, setclient] = useState(null);
 
-  const SelectedClient = (el) => {
-    setclient(el)
+  const SelectedClient = (index) => {
+    console.log(index)
+    setclient(listClients[index])
+    setClientIndex(index)
     Toggle()
   }
 
@@ -135,7 +139,7 @@ const addClient = () => {
         userPhone: user.phone,
         userEmail: user.email,
         userAddress: user.address,
-        indexClient: client.index,
+        indexClient: clientIndex,
         client: client.name,
         clientPhone: client.phone,
         clientEmail: client.email,
@@ -150,10 +154,16 @@ const addClient = () => {
         totalTVA: total[2],
         totalTTC: total[3], 
       }
-      generatePdf(bills)    
-      savePDFToDatabase(bills)  
-      alert("Votre document a bien été enregistré") 
-      navigation()
+      console.log(prestations)
+      if(prestations.length == 0 || prestations == "undefined") {
+        alert('Veuillez ajouter une prestation')
+      }
+      else {
+        generatePdf(bills)    
+        savePDFToDatabase(bills)  
+        alert("Votre document a bien été enregistré") 
+        navigation()
+      }
     }
 
   return (
@@ -167,115 +177,112 @@ const addClient = () => {
       <h2 className={styles.h2}>Informations du client</h2>
         <div className={styles.selectedClient}> Client sélectionné :
           {client ?  <span className={styles.span_client}> {client.name} </span> : <span className={styles.span_client}> à définir </span>} 
-          </div>
-        <div className={styles.box}>
-       
+        </div>
+        <div className={styles.box}>       
           <button className={styles.toggleBtn} onClick={addClient}> Créer un client </button>
           <button onClick={Toggle} className={styles.toggleBtn} > Ajouter client enregistré  </button> 
-          {toggle && (
-  <section className={styles.listClients}>
-    <div className={styles.toggleBtnCloseBox}>
-      <button onClick={Toggle} className={styles.toggleBtnClose}>
-        Fermer
-      </button>
-    </div>
-    <h3 className={styles.modal_title}>Vos clients enregistrés</h3>
-    <div className={styles.modal_container}>
-      {listClients.map((el, index) => (
-        <div
-          onClick={() => SelectedClient(el)}
-          className={`${styles.rowModal} ${
-            client === el ? styles.selectedClient : ''
-          }`}
-          key={index}
-        >
-          <Image
-            src={Folder}
-            width={35}
-            height={35}
-            priority
-            className={styles.icons}
-            alt={props.alt}
-          />
-          <p className={styles.p}>{el.name}</p>
+            {toggle && (
+              <section className={styles.listClients}>
+                <div className={styles.toggleBtnCloseBox}>
+                  <button onClick={Toggle} className={styles.toggleBtnClose}>
+                    Fermer
+                  </button>
+                </div>
+                <h3 className={styles.modal_title}>Vos clients enregistrés</h3>
+                  <div className={styles.modal_container}>
+                    {listClients.length == 0 ? <p> Vous n'avez aucun client enregistré</p> :
+                      <div>
+                        {listClients.map((el, index) => (
+                          <div
+                            onClick={() => SelectedClient(index)}
+                            className={`${styles.rowModal} ${ client === el ? styles.selectedClient : ''}`}
+                            key={index}
+                          >
+                            <Image
+                              src={Folder}
+                              width={35}
+                              height={35}
+                              priority
+                              className={styles.icons}
+                              alt={props.alt}
+                            />
+                            <p className={styles.p}>{el.name}</p>
+                          </div>
+                        ))}
+                      </div>
+                    }
+                  </div>
+              </section>
+            )}
         </div>
-      ))}
-    </div>
-  </section>
-)}
-  </div>
-{client ?
-  <section>
-  <div className={styles.container}>    
-        <div className={styles.services}>
-          <div className={styles.row}>
-            <label className={styles.label}>Prestation:</label>
-            <input className={styles.input} type="text" value={prestation} onChange={(e) => setPrestation(e.target.value)} />
-          </div>       
-          <div className={styles.row}>
-            <label className={styles.label}>Quantité:</label>
-            <input className={styles.input} type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+        {client ?
+        <section>
+          <div className={styles.container}>    
+            <div className={styles.services}>
+              <div className={styles.row}>
+                <label className={styles.label}>Prestation:</label>
+                <input className={styles.input} placeholder="Nom de la prestation" type="text" value={prestation} onChange={(e) => setPrestation(e.target.value)} />
+              </div>       
+              <div className={styles.row}>
+                <label className={styles.label}>Quantité:</label>
+                <input className={styles.input} placeholder="Nombre de prestations" type="number" value={quantity} onChange={(e) => setQuantity(e.target.value)} />
+              </div>
+              <div className={styles.row}>
+                <label className={styles.label}>Prix:</label>
+                <input className={styles.input} placeholder="Prix de la prestation" type="number" value={prix} onChange={(e) => setPrix(e.target.value)} />
+              </div>
+              <div className={styles.row}>
+                <button  className={styles.btn_add} onClick={addPrestation}>Ajouter</button> 
+              </div>      
+            </div>
           </div>
-        <div className={styles.row}>
-          <label className={styles.label}>Prix:</label>
-          <input className={styles.input} type="number" value={prix} onChange={(e) => setPrix(e.target.value)} />
-        </div>
-        <div className={styles.row}>
-          <button  className={styles.btn_add} onClick={addPrestation}>Ajouter</button> 
-        </div>      
-        </div>
-      </div>
-      <div className={styles.table}> 
-      <table className={styles.tab} border="1">
-        <thead>
-          <tr>
-            <th className={styles.th}>Prestation</th>
-            <th className={styles.th}>Quantité</th>
-            <th className={styles.th}>Prix</th>
-            <th className={styles.th}>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          {prestations.map((item, index) => (
-            <tr key={index}>
-              <td className={styles.td}>{item.prestation}</td>
-              <td className={styles.td}>{item.quantity}</td>
-              <td className={styles.td}>{item.prix}€</td>
-              <td className={styles.td}>{item.prix * item.quantity}€</td>            
-                <button className={styles.delete} onClick={() => removePrestation(index)}>X</button>            
-            </tr>
-          ))}
-          <tr>
-            <td className={styles.tr} colSpan="2"> Total HT : {calculateWithoutTVA()} € </td>
-            <td className={styles.tr}> Total T.V.A : {calculateTVATotal()}€ </td>
-            <td className={styles.tr}>Total: {calculateTotal()}€</td>
-          </tr>
-        </tbody>
-      </table>
-      </div> 
-      <div className={styles.btn_generate_box}> 
-        <button className={styles.generate} onClick={generatePDF}>Générer PDF</button>
-      </div>  
-
-  </section> : 
-  <section className={styles.warning}>
-    <h2 className={styles.warningTitle}> Veuillez définir un client avant de poursuivre</h2>
-    <h3 className={styles.pTitle}> Création d'un client</h3> 
-    <div className={styles.warning_div}> 
-      <p className={styles.pw} > Vous pouvez créer simplement un client en appuyer sur le bouton <span className={styles.warningSpan}>"Créer un client"</span>
-      ci-dessus. Vous retrouverez l'ensemble de vos clients dans l'onglet "Vos clients"</p>
-    </div>
-
-    <h3 className={styles.pTitle}> Ajout d'un client à votre facture</h3>
-    <div className={styles.warning_div} >
-      <p className={styles.pw}> Lorsque vous avez déjà enregistré un client, il vous suffit de cliquer sur le bouton
-      <span className={styles.warningSpan}> "Ajouter client enregistré" </span> pour afficher la liste de vos clients et faire
-       votre choix.Les informations du client seront automatiquement
-      transmises sur votre facture ou votre devis.</p>
-    </div>
-  </section> }
-    
-    
+          <div className={styles.table}> 
+            <table className={styles.tab} border="1">
+              <thead>
+                <tr>
+                <th className={styles.th}>Prestation</th>
+                <th className={styles.th}>Quantité</th>
+                <th className={styles.th}>Prix</th>
+                <th className={styles.th}>Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {prestations.map((item, index) => (
+                  <tr key={index}>
+                    <td className={styles.td}>{item.prestation}</td>
+                    <td className={styles.td}>{item.quantity}</td>
+                    <td className={styles.td}>{item.prix}€</td>
+                    <td className={styles.td}>{item.prix * item.quantity}€</td>            
+                      <button className={styles.delete} onClick={() => removePrestation(index)}>X</button>            
+                  </tr>
+                ))}
+                <tr>
+                  <td className={styles.tr} colSpan="2"> Total HT : {calculateWithoutTVA()} € </td>
+                  <td className={styles.tr}> Total T.V.A : {calculateTVATotal()}€ </td>
+                  <td className={styles.tr}>Total: {calculateTotal()}€</td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
+          <div className={styles.btn_generate_box}> 
+            <button className={styles.generate} onClick={generatePDF}>Générer PDF</button>
+          </div>  
+        </section> : 
+        <section className={styles.warning}>
+          <h2 className={styles.warningTitle}> Veuillez définir un client avant de poursuivre</h2>
+          <h3 className={styles.pTitle}> Création d'un client</h3> 
+          <div className={styles.warning_div}> 
+            <p className={styles.pw} > Vous pouvez créer simplement un client en appuyer sur le bouton <span className={styles.warningSpan}>"Créer un client"</span>
+              ci-dessus. Vous retrouverez l'ensemble de vos clients dans l'onglet "Vos clients"</p>
+          </div>
+          <h3 className={styles.pTitle}> Ajout d'un client à votre facture</h3>
+          <div className={styles.warning_div} >
+            <p className={styles.pw}> Lorsque vous avez déjà enregistré un client, il vous suffit de cliquer sur le bouton
+            <span className={styles.warningSpan}> "Ajouter client enregistré" </span> pour afficher la liste de vos clients et faire
+              votre choix.Les informations du client seront automatiquement
+              transmises sur votre facture ou votre devis.</p>
+          </div>
+        </section> }
     </section>
    </>
   );

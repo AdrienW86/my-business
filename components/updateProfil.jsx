@@ -2,14 +2,13 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import styles from '@/styles/UpdateProfil.module.css'
 
-const UpdateForm = ({ onSubmit }) => {
+const UpdateForm = ({ onSubmit, onDelete }) => {
 
   const navigation = () => {
     window.location.reload()
   }
 
   const { register, handleSubmit, setValue, reset,  formState: { errors } } = useForm()
-    // Vous pouvez configurer des options globales ici);
 
   const handleChange = (e) => {
     setValue(e.target.name, e.target.value);
@@ -90,13 +89,12 @@ const UpdateForm = ({ onSubmit }) => {
             </div>
             <div className={styles.div_error}>
             {errors.address?.number && (
-  <p className={styles.error_number}>{errors.address.number.message}</p>
-)}
-              {errors.address?.street && (
+              <p className={styles.error_number}>{errors.address.number.message}</p>
+            )}
+            {errors.address?.street && (
               <p className={styles.error_street}>{errors.address.street.message}</p>
             )}
-            </div>  
-            
+            </div>             
                 <input className={styles.inputAdress}
                   {...register('address.city', {
                     required: 'La ville est requise',
@@ -120,10 +118,12 @@ const UpdateForm = ({ onSubmit }) => {
               })} 
               placeholder="Pays" onChange={handleChange} 
             />     
-             {errors.address?.country && <p className={styles.error}>{errors.address.country.message}</p>}          
-
+             {errors.address?.country && <p className={styles.error}>{errors.address.country.message}</p>}                           
             </div>
-            <button className={styles.submit} type="submit">Mettre à jour</button>
+            <div className={styles.box_btn }>
+              <button className={styles.submit} type="submit">Mettre à jour</button>
+              <button className={styles.delete} onClick={onDelete}> Supprimer</button>
+            </div>            
         </form>
    </section>
   );

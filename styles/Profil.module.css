@@ -61,8 +61,7 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    height: 40vh
-    
+    height: 40vh  
 }
 
 .p_infos {
@@ -94,10 +93,12 @@
     justify-content: center;
     width: 100%;
 }
+
 .params {
     width: 100px;
     height: 40px;
     padding: 8px;
+    z-index: 3;
     color: #004AAD;
     border-radius: 8px;
     font-weight: bold;
@@ -111,4 +112,35 @@
     cursor: pointer;
     color: white;
     background-color: #004AAD;
+}
+
+.warning {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    top: 20vh;
+    left: 0;
+    height: 70vh; 
+    width: 100%;
+    z-index: 2;
+    line-height: 1.5;
+    background: white;
+}
+
+.titleWarning {
+    font-size: 1.5em;
+    margin: 0 auto;
+    padding: 8px;
+    text-align: center;
+    color: #004AAD;
+    margin-bottom: 80px;
+}
+
+.pWarning {
+    margin: 0 auto;
+    font-size: 1.2em;
+    padding: 8px;
+    text-align: center;
+    font-weight: 900;
 }

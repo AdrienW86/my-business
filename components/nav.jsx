@@ -18,7 +18,7 @@ export default function nav() {
           <Link className={router.pathname === '/devis' ? styles.active : styles.link} href="/devis"> <li className={styles.li}> Devis </li> </Link> 
           <Link className={router.pathname === '/clients' ? styles.active : styles.link} href="/clients"> <li className={styles.li}> Clients </li> </Link>          
         </ul>               
-        <button  onClick={navigation} className={styles.disconnect}> Quitter </button> 
+        <button onClick={navigation} className={styles.disconnect}> Quitter </button> 
      </nav>
   )
 }

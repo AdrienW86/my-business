@@ -16,24 +16,13 @@ async function handler(req, res) {
     const decodedToken = jwt.verify(token, process.env.NEXT_PUBLIC_JWT_SECRET || 'votre_clé_secrète');
     const userId = decodedToken.userId;
 
-    const updatedUser = await User.findByIdAndUpdate(userId, {
-        name: req.body.name,
-        siret: req.body.siret,
-        tva: req.body.tva,
-        address: {
-          number: req.body.address.number,
-          street: req.body.address.street,
-          city: req.body.address.city,
-          zipcode: req.body.address.zipcode,
-          country: req.body.address.country,
-        },
-        phone: req.body.phone,
-      }, { new: true });
+    const user = await User.deleteOne({ _id: userId });
 
-    if (!updatedUser) {
+    if (!user) {
       return res.status(404).json({ error: 'Utilisateur non trouvé' });
     }
-    res.status(200).json(updatedUser);
+
+    res.status(200).json({ message: 'Utilisateur supprimé avec succès' });
   } catch (error) {
     console.error("Error handling request:", error);
     res.status(500).json({ error: "Internal Server Error" });
