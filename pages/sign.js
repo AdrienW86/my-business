@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { useState } from 'react'
 import { useRouter } from 'next/router';
 import Image from 'next/image'
-import Logo from '../assets/wallpaper.png'
+import Logo from '../assets/wallpapers.png'
 import Footer from '../components/footer'
 import styles from '@/styles/Home.module.css'
 
@@ -11,6 +11,10 @@ export default function Sign() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const navigation = () => {
+    router.push('/')
+  }
 
   const onSubmit = async (data) => {
     try {
@@ -49,10 +53,13 @@ export default function Sign() {
             height={270} 
             src={Logo} 
             alt="image de fond" 
+            onClick={navigation}
             className={styles.wallpaper}
           />
         </section>                 
         <section className={styles.modal}>
+        <h1 className={styles.title}> Incrivez vous </h1>
+          <p className={styles.title}> et commencez à générer vos documents</p>
           <form className={styles.signForm} onSubmit={handleSubmit(onSubmit)}>
             <label className={styles.label}>
               Email:
