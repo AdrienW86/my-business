@@ -17,13 +17,13 @@
     list-style: none;
 }
 
-.li {
-    width: 60px;
-    height: 20px;
-    padding: 8px;
+.li, .active {
+    width: 70px;
+    height: 40px;
     margin: auto;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: center;
     text-decoration: none;
     font-size: 0.9em;
@@ -66,15 +66,6 @@
 .disconnect:hover {
     cursor: pointer;
     background-color: red;
-}
-
-.active, .link {
-    height: 4vh;
-    margin: auto  ;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-decoration: none;
 }
 
 .active {

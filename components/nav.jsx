@@ -14,9 +14,9 @@ export default function nav() {
   return (
     <nav className={styles.nav}>           
         <ul className={styles.ul}>  
-          <li className={styles.li}> <Link className={router.pathname === '/factures' ? styles.active : styles.link} href="/factures"> Factures </Link> </li>       
-          <li className={styles.li}> <Link className={router.pathname === '/devis' ? styles.active : styles.link} href="/devis">  Devis  </Link> </li>
-          <li className={styles.li}> <Link className={router.pathname === '/clients' ? styles.active : styles.link} href="/clients"> Clients </Link> </li>         
+         <Link className={router.pathname === '/factures' ? styles.active : styles.li} href="/factures"> Factures </Link>      
+         <Link className={router.pathname === '/devis' ? styles.active : styles.li} href="/devis">  Devis  </Link>
+         <Link className={router.pathname === '/clients' ? styles.active : styles.li} href="/clients"> Clients </Link>  
         </ul>               
         <button onClick={navigation} className={styles.disconnect}> Quitter </button> 
      </nav>
